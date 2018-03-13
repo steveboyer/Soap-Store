@@ -1,0 +1,326 @@
+/*
+    Title: SBHome2
+    Version: 1.2.0
+    Last Change: 05/20/17
+    Author: Stephen Boyer, Ryan Fitzgerald
+    Repo (orig): https://github.com/RyanFitzgerald/devportfolio-template
+    Description: This file contains all the styles associated with the page
+    that don't come from third party libraries. This file gets compiled using
+    Gulp and send to the /css folder which is then loaded on the page.
+*/
+/*
+    File Contents:
+        1. Variables
+        2. Mixins
+        3. Global Styles
+        4. Lead Styles
+        5. About Styles
+        6. Experience Styles
+        7. Education Styles
+        8. Project Styles
+        9. Skills Styles
+        10. Contact Styles
+        11. Optional Section Styles
+        12. Media Queries
+*/
+/*
+    ------------------------
+    ----- 1. Variables -----
+    ------------------------
+*/
+/*
+    ---------------------
+    ----- 2. Mixins -----
+    ---------------------
+*/
+/*
+    ----------------------------
+    ----- 3. Global Styles -----
+    ----------------------------
+*/
+body {
+  font-family: 'Linux Biolinum O', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  background: linear-gradient(65deg, #464646, #393939);
+}
+body.active {
+  overflow: hidden;
+  z-index: -1;
+}
+
+h2 {
+  color: white;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+#logo {
+  width: 100%;
+  height: 100%;
+}
+
+.card-body {
+  background-color: #535353;
+  font-family: 'Linux Biolinum O', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+}
+
+.card-footer {
+  background-color: #535353;
+}
+
+.card {
+  color: #bcdddd;
+  border-color: #9acccc;
+}
+.card a {
+  text-decoration: none;
+  color: #bcdddd;
+  font-family: 'Linux Biolinum O', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+}
+
+nav {
+  background-color: #3e3e3e;
+}
+nav a {
+  color: #bcdddd;
+}
+
+.navbar-brand {
+  display: inline-block;
+  margin-left: 35px;
+}
+
+footer {
+  background-color: #3e3e3e;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.category-list-item, .cart_button {
+  background-color: #535353;
+  color: #bcdddd;
+  border: 1px solid #9bcccc;
+  display: inline-block;
+  font-family: 'Linux Biolinum O', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  width: 100%;
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: calc(.25rem - 1px);
+  -webkit-transition-duration: 0.2s;
+  /* Safari */
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+.category-list-item:hover, .cart_button:hover {
+  background-color: #9bcccc;
+  color: black;
+  text-decoration: none;
+}
+.category-list-item:active, .cart_button:active {
+  position: relative;
+  top: 1px;
+}
+
+.dropdown-menu {
+  background-color: #444444;
+}
+
+.dropdown-item {
+  color: white;
+  background-color: #444444;
+}
+.dropdown-item:hover {
+  background-color: #9bcccc;
+  color: black;
+}
+
+.navbar-brand {
+  font-family: 'Kaushan Script', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.form-group > label {
+  color: white;
+}
+
+/* Define how SqPaymentForm iframes should look */
+.sq-input {
+  border: 1px solid #dfdfdf;
+  outline-offset: -2px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* Define how SqPaymentForm iframes should look when they have focus */
+.sq-input--focus {
+  outline: 5px auto #3b99fc;
+}
+
+/* Define how SqPaymentForm iframes should look when they contain invalid values */
+.sq-input--error {
+  outline: 5px auto #ff6161;
+}
+
+/* Customize the "Pay with Credit Card" button */
+.button-credit-card {
+  min-width: 200px;
+  min-height: 20px;
+  padding: 0;
+  margin: 5px;
+  line-height: 20px;
+  box-shadow: 2px 2px 1px #c8c8c8;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid #c8c8c8;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Customize the Apple Pay on the Web button */
+.button-apple-pay {
+  min-width: 200px;
+  min-height: 40px;
+  max-height: 64px;
+  padding: 0;
+  margin: 10px;
+  background-image: -webkit-named-image(apple-pay-logo-white);
+  background-color: black;
+  background-size: 100% 60%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none;
+  font-family: 'Linux Biolinum O', Arial, serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Customize the Masterpass button */
+.button-masterpass {
+  min-width: 200px;
+  min-height: 40px;
+  max-height: 40px;
+  padding: 0;
+  margin: 10px;
+  background-image: url(https://static.masterpass.com/dyn/img/btn/global/mp_chk_btn_147x034px.svg);
+  background-color: black;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 5px;
+  border-color: white;
+  cursor: pointer;
+  display: none;
+  font-family: 'Linux Biolinum O', Arial, serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+#sq-ccbox {
+  float: left;
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+  vertical-align: top;
+  font-family: 'Linux Biolinum O', Arial, serif;
+  font-weight: normal;
+}
+
+#digital_wallet {
+  color: white;
+  font-family: 'Linux Biolinum O', Arial, serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+#sq-card-number {
+  text-align: center;
+}
+
+#sq-cvv {
+  text-align: center;
+}
+
+#sq-expiration-date {
+  text-align: center;
+}
+
+#sq-postal-code {
+  text-align: center;
+}
+
+#sq-creditcard {
+  text-align: center;
+}
+
+.footer-header {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.footer-header:after {
+  content: ' ';
+  position: relative;
+  display: block;
+  width: 40px;
+  margin: 0 2%;
+  border: 0.5px solid #9bcccc;
+  border-radius: 0px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  left: 48%;
+  transform: translateX(-50%);
+}
+
+#checkout:after {
+  content: ' ';
+  position: relative;
+  display: block;
+  width: 40px;
+  margin: 0 2%;
+  border: 0.5px solid #9bcccc;
+  border-radius: 0px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  left: 48%;
+  transform: translateX(-50%);
+}
+
+.s-masthead {
+  display: block;
+  position: relative;
+  padding: 3rem 15px;
+}
+
+@media (min-width: 576px) {
+  .s-masthead {
+    padding: 30px 40px 30px 40px;
+  }
+}
