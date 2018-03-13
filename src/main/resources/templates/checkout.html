@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+    <!-- link to the SqPaymentForm library -->
+    <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
+    </script>
+
+    <!-- link to the local SqPaymentForm initialization -->
+    <script type="text/javascript" src="path/to/sqpaymentform.js">
+    </script>
+
+    <!-- link to the custom styles for SqPaymentForm -->
+    <link rel="stylesheet" type="text/css" href="path/to/sqpaymentform.css"/>
+</head>
+
+<!-- Page content -->
+<body>
+
+<!-- Navigation -->
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+</div>
+<!-- Page Content -->
+<div class="container s-masthead">
+    <h3 id="checkout text-center">Checkout</h3>
+
+    <!-- Review cart -->
+
+
+    <div class="row mb-4">
+        <!-- Shipping -->
+        <div class="col-md-4 col-sm-6" >
+            <h5 class="text-white">Shipping Information</h5>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name"/>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Address Line 1" aria-label="Address Line 1" aria-describedby="address1"/>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Address Line 2" aria-label="Address Line 2" aria-describedby="address2"/>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="city"/>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="State" aria-label="State" aria-describedby="state"/>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Zip Code" aria-label="Zip" aria-describedby="zip"/>
+            </div>
+            <br>
+        <!-- Payment -->
+            <h5 class="text-white">Payment Information</h5>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Credit Card" aria-label="Credit Card" aria-describedby="card-number"/>
+            </div>
+            <!--<br>-->
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="CVV" aria-label="CVV" aria-describedby="ccv"/>
+            </div>
+            <!--<br>-->
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Expiration Date" aria-label="Credit Card" aria-describedby="ccv"/>
+            </div>
+            <!--<br>-->
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="Billing Zip Code" aria-label="Expiration Date" aria-describedby="expiration-date"/>
+            </div>
+            <div class="text-white">Pay with a Digital Wallet</div>
+            <!--<div id="sq-apple-pay-label" class="wallet-not-enabled">Apple Pay for Web not enabled</div>-->
+            <!-- Placeholder for Apple Pay for Web button -->
+            <div class="input-group mb-2">
+                <button type="button" class="btn">Apple Pay</button>
+            </div>
+            <!--<div id="sq-masterpass-label" class="wallet-not-enabled">Masterpass not enabled</div>-->
+            <!-- Placeholder for Masterpass button -->
+            <div class="input-group mb-2">
+                <button type="button" class="btn">Masterpass</button>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 col-sm-6">
+            <h5 class="text-white">Order Details</h5>
+            <button class="btn">Place Order</button>
+        </div>
+    </div>
+
+
+    <!--
+      You should replace the action attribute of the form with the path of
+      the URL you want to POST the nonce to (for example, "/process-card")
+    -->
+    <!--<form id="nonce-form" novalidate action="path/to/payment/processing/page" method="post">-->
+    <!--Pay with a Credit Card-->
+    <!--<table>-->
+    <!--<tbody>-->
+    <!--<tr>-->
+    <!--<td>Card Number:</td>-->
+    <!--<td><div id="sq-card-number"></div></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>CVV:</td>-->
+    <!--<td><div id="sq-cvv"></div></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>Expiration Date: </td>-->
+    <!--<td><div id="sq-expiration-date"></div></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>Postal Code:</td>-->
+    <!--<td><div id="sq-postal-code"></div></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>-->
+    <!--<button id="sq-creditcard" class="button-credit-card" onclick="requestCardNonce(event)">-->
+    <!--Pay with card-->
+    <!--</button>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+
+    <!--
+      After a nonce is generated it will be assigned to this hidden input field.
+    -->
+    <!--<input type="hidden" id="card-nonce" name="nonce">-->
+    <!--</form>-->
+
+
+</div>
+
+<!-- /.container -->
+
+<!-- Footer -->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</body>
+
+</html>

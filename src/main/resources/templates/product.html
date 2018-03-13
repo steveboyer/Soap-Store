@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+
+<!-- Page content -->
+<body>
+
+<!-- Navigation -->
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+</div>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Sidebar -->
+        <!--/*/ <th:block th:include="fragments/sidebar :: sidebar"></th:block> /*/-->
+
+        <div class="col-lg-9 s-masthead">
+            <div >
+                <h3 th:text="${product.name}" class="text-center text-white mb-4"></h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <img th:src="${product.imageUrl}" class="rounded img-fluid img-thumbnail mb-4">
+                    <p class="text-white">Lorem ipsum lorem ipsum lorem ipsum lorem ipgusm</p>
+                    <p class="text-white">$5.99</p>
+                </div>
+                <div class="col-md-6">
+                <form>
+                    <div class="form-group center-text">
+                            <label for="sel-size">Select Size:</label>
+                            <select class="form-control" id="sel-size">
+                                <option value="2oz">2 oz</option>
+                                <option value="4oz">4 oz</option>
+                                <option vlaue="8oz">8 oz</option>
+                            </select>
+                        </div>
+                        <div class="form-group center-text">
+                            <label for="sel-quantity" >Select Quantity:</label>
+                            <select class="form-control" id="sel-quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="form-group center-text">
+                            <label for="sel-scent">Select Scent:</label>
+                            <select class="form-control" id="sel-scent">
+                                <option value="lavender">Lavender</option>
+                                <option value="rose">Rose</option>
+                                <option value="cherry">Cherry</option>
+                                <option value="fragrance_free">Fragrance Free</option>
+                            </select>
+                        </div>
+                        <a class="cart_button" id="add_button" href="#">Add to cart</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</body>
+
+</html>
