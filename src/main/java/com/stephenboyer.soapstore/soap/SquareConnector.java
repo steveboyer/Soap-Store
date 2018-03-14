@@ -69,8 +69,7 @@ public class SquareConnector {
     }
 
     public SquareConnector() {
-        // Initialize connector but don't log in
-        // mustLoadEnvironmentVariable(SQUARE_APP_ID_ENV_VAR);
+        squareClient = getSquareClient();
     }
 
     public CatalogObject getCatalogObject(String id){
