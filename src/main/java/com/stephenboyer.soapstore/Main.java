@@ -81,7 +81,7 @@ public class Main {
     } else {
       HikariConfig config = new HikariConfig();
       config.setJdbcUrl(dbUrl);
-      System.out.println(dbUrl);
+      System.out.println("datasrc" + dbUrl);
       return new HikariDataSource(config);
     }
   }
