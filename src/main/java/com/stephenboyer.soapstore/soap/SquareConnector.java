@@ -169,6 +169,7 @@ public class SquareConnector {
 
         // Get catalog, create product, map category to product, add to list
         getSquareCatalog(0).forEach(p -> products.add(mapProduct(categories, new Product(p))));
+        products.stream().forEach(p -> System.out.println(p));
 
         return products;
     }
