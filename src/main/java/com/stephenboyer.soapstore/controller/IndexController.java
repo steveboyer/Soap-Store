@@ -26,13 +26,11 @@ public class IndexController {
     // Homepage
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index(Model model) {
-        ModelAndView mav = new ModelAndView("index");
-
         SquareConnector sq = new SquareConnector();
         List<Product> products = sq.getProducts();
-
         List<Category> categories = sq.getCategories();
 
+        ModelAndView mav = new ModelAndView("index");
         mav.addObject("categories", categories);
         mav.addObject("products", products);
 
