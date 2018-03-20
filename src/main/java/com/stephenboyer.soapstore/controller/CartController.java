@@ -32,8 +32,8 @@ public class CartController {
     }
 
     @RequestMapping(value = "/store/continue" , method = GET)
-    public ModelAndView continue_shopping(){
-
+    public String continue_shopping(){
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/store/added_to_cart", method = GET)

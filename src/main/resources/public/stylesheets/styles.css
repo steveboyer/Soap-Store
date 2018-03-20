@@ -110,7 +110,7 @@ ul {
   list-style: none;
 }
 
-#big-card {
+.big-card {
   background: #9acccc;
   border-radius: 5px;
   border-color: white;
