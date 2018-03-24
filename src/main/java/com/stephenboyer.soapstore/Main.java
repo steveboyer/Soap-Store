@@ -67,13 +67,25 @@ public class Main {
             stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
             ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
 
-            ArrayList<String> output = new ArrayList<String>();
+            ArrayList<String> output = new ArrayList<>();
             while (rs.next()) {
                 output.add("Read from DB: " + rs.getTimestamp("tick"));
             }
 
             model.put("records", output);
             return "db";
+        } catch (Exception e) {
+            model.put("message", e.getMessage());
+            return "error";
+        }
+    }
+
+    @RequestMapping("/db/store")
+    String dbstore(Map<String, Object> model){
+        try (Connection connection = dataSource.getConnection()){
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS productss");
+            statement.ex
         } catch (Exception e) {
             model.put("message", e.getMessage());
             return "error";
