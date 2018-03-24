@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.domain.repository.impl;
 
-import com.stephenboyer.soapstore.domain.Address;
+import com.stephenboyer.soapstore.domain.CartItem;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,36 +8,36 @@ import java.util.Map;
 
 @Repository
 public class CartItemRepositoryImpl {
-    private Map<String, Address> addresses;
+    private Map<String, CartItem> cartItemes;
 
     public CartItemRepositoryImpl(){
-        addresses = new HashMap<>();
+        cartItemes = new HashMap<>();
     }
 
-    public Address create(Address address){
-        if(addresses.keySet().contains(address.getId())) {
-            throw new IllegalArgumentException(String.format("Address %s already exists", address.getId()));
+    public CartItem create(CartItem cartItem){
+        if(cartItemes.keySet().contains(cartItem.getId())) {
+            throw new IllegalArgumentException(String.format("CartItem %s already exists", cartItem.getId()));
         }
-        addresses.put(address.getId(), address);
-        return address;
+        cartItemes.put(cartItem.getId(), cartItem);
+        return cartItem;
     }
 
-    public Address read(String cartId){
-        return addresses.get(cartId);
+    public CartItem read(String cartId){
+        return cartItemes.get(cartId);
     }
 
-    public void update(String addressId, Address address){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", address.getId()));
+    public void update(String cartItemId, CartItem cartItem){
+        if(!cartItemes.keySet().contains(cartItemId)){
+            throw new IllegalArgumentException(String.format("Cannot update because cartItem %s does not exist", cartItem.getId()));
         }
 
-        else addresses.put(addressId, address);
+        else cartItemes.put(cartItemId, cartItem);
     }
 
-    public void delete(String addressId){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", addressId));
+    public void delete(String cartItemId){
+        if(!cartItemes.keySet().contains(cartItemId)){
+            throw new IllegalArgumentException(String.format("Cannot update because cartItem %s does not exist", cartItemId));
         }
-        addresses.remove(addressId);
+        cartItemes.remove(cartItemId);
     }
 }

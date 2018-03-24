@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.domain.repository.impl;
 
-import com.stephenboyer.soapstore.domain.Address;
+import com.stephenboyer.soapstore.domain.Customer;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,36 +8,36 @@ import java.util.Map;
 
 @Repository
 public class CustomerRepositoryImpl {
-    private Map<String, Address> addresses;
+    private Map<String, Customer> customeres;
 
     public CustomerRepositoryImpl(){
-        addresses = new HashMap<>();
+        customeres = new HashMap<>();
     }
 
-    public Address create(Address address){
-        if(addresses.keySet().contains(address.getId())) {
-            throw new IllegalArgumentException(String.format("Address %s already exists", address.getId()));
+    public Customer create(Customer customer){
+        if(customeres.keySet().contains(customer.getId())) {
+            throw new IllegalArgumentException(String.format("Customer %s already exists", customer.getId()));
         }
-        addresses.put(address.getId(), address);
-        return address;
+        customeres.put(customer.getId(), customer);
+        return customer;
     }
 
-    public Address read(String cartId){
-        return addresses.get(cartId);
+    public Customer read(String cartId){
+        return customeres.get(cartId);
     }
 
-    public void update(String addressId, Address address){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", address.getId()));
+    public void update(String customerId, Customer customer){
+        if(!customeres.keySet().contains(customerId)){
+            throw new IllegalArgumentException(String.format("Cannot update because customer %s does not exist", customer.getId()));
         }
 
-        else addresses.put(addressId, address);
+        else customeres.put(customerId, customer);
     }
 
-    public void delete(String addressId){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", addressId));
+    public void delete(String customerId){
+        if(!customeres.keySet().contains(customerId)){
+            throw new IllegalArgumentException(String.format("Cannot update because customer %s does not exist", customerId));
         }
-        addresses.remove(addressId);
+        customeres.remove(customerId);
     }
 }

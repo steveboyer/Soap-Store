@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.domain.repository.impl;
 
-import com.stephenboyer.soapstore.domain.Address;
+import com.stephenboyer.soapstore.domain.ProductVariation;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,36 +8,36 @@ import java.util.Map;
 
 @Repository
 public class ProductVariationRepositoryImpl {
-    private Map<String, Address> addresses;
+    private Map<String, ProductVariation> productVariationes;
 
     public ProductVariationRepositoryImpl(){
-        addresses = new HashMap<>();
+        productVariationes = new HashMap<>();
     }
 
-    public Address create(Address address){
-        if(addresses.keySet().contains(address.getId())) {
-            throw new IllegalArgumentException(String.format("Address %s already exists", address.getId()));
+    public ProductVariation create(ProductVariation productVariation){
+        if(productVariationes.keySet().contains(productVariation.getId())) {
+            throw new IllegalArgumentException(String.format("ProductVariation %s already exists", productVariation.getId()));
         }
-        addresses.put(address.getId(), address);
-        return address;
+        productVariationes.put(productVariation.getId(), productVariation);
+        return productVariation;
     }
 
-    public Address read(String cartId){
-        return addresses.get(cartId);
+    public ProductVariation read(String cartId){
+        return productVariationes.get(cartId);
     }
 
-    public void update(String addressId, Address address){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", address.getId()));
+    public void update(String productVariationId, ProductVariation productVariation){
+        if(!productVariationes.keySet().contains(productVariationId)){
+            throw new IllegalArgumentException(String.format("Cannot update because productVariation %s does not exist", productVariation.getId()));
         }
 
-        else addresses.put(addressId, address);
+        else productVariationes.put(productVariationId, productVariation);
     }
 
-    public void delete(String addressId){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", addressId));
+    public void delete(String productVariationId){
+        if(!productVariationes.keySet().contains(productVariationId)){
+            throw new IllegalArgumentException(String.format("Cannot update because productVariation %s does not exist", productVariationId));
         }
-        addresses.remove(addressId);
+        productVariationes.remove(productVariationId);
     }
 }

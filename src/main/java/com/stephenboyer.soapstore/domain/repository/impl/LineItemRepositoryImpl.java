@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.domain.repository.impl;
 
-import com.stephenboyer.soapstore.domain.Address;
+import com.stephenboyer.soapstore.domain.LineItem;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,36 +8,36 @@ import java.util.Map;
 
 @Repository
 public class LineItemRepositoryImpl {
-    private Map<String, Address> addresses;
+    private Map<String, LineItem> lineItemes;
 
     public LineItemRepositoryImpl(){
-        addresses = new HashMap<>();
+        lineItemes = new HashMap<>();
     }
 
-    public Address create(Address address){
-        if(addresses.keySet().contains(address.getId())) {
-            throw new IllegalArgumentException(String.format("Address %s already exists", address.getId()));
+    public LineItem create(LineItem lineItem){
+        if(lineItemes.keySet().contains(lineItem.getId())) {
+            throw new IllegalArgumentException(String.format("LineItem %s already exists", lineItem.getId()));
         }
-        addresses.put(address.getId(), address);
-        return address;
+        lineItemes.put(lineItem.getId(), lineItem);
+        return lineItem;
     }
 
-    public Address read(String cartId){
-        return addresses.get(cartId);
+    public LineItem read(String cartId){
+        return lineItemes.get(cartId);
     }
 
-    public void update(String addressId, Address address){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", address.getId()));
+    public void update(String lineItemId, LineItem lineItem){
+        if(!lineItemes.keySet().contains(lineItemId)){
+            throw new IllegalArgumentException(String.format("Cannot update because lineItem %s does not exist", lineItem.getId()));
         }
 
-        else addresses.put(addressId, address);
+        else lineItemes.put(lineItemId, lineItem);
     }
 
-    public void delete(String addressId){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", addressId));
+    public void delete(String lineItemId){
+        if(!lineItemes.keySet().contains(lineItemId)){
+            throw new IllegalArgumentException(String.format("Cannot update because lineItem %s does not exist", lineItemId));
         }
-        addresses.remove(addressId);
+        lineItemes.remove(lineItemId);
     }
 }

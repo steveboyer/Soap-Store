@@ -5,7 +5,15 @@ import com.stephenboyer.soapstore.util.Strings;
 import java.io.Serializable;
 
 public class CheckoutRequest implements Serializable {
-//    @Id
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    //    @Id
     public String id;
 
     String redirect_url;

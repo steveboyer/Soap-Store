@@ -23,6 +23,15 @@ public class ProductVariation  {
         name = variation.getName();
         price = variation.getPriceMoney().getAmount();
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return Strings.toString(this);

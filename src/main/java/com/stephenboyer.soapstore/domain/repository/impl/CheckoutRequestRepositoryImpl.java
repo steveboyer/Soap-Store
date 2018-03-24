@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.domain.repository.impl;
 
-import com.stephenboyer.soapstore.domain.Address;
+import com.stephenboyer.soapstore.domain.CheckoutRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,36 +8,36 @@ import java.util.Map;
 
 @Repository
 public class CheckoutRequestRepositoryImpl {
-    private Map<String, Address> addresses;
+    private Map<String, CheckoutRequest> checkoutRequestes;
 
     public CheckoutRequestRepositoryImpl(){
-        addresses = new HashMap<>();
+        checkoutRequestes = new HashMap<>();
     }
 
-    public Address create(Address address){
-        if(addresses.keySet().contains(address.getId())) {
-            throw new IllegalArgumentException(String.format("Address %s already exists", address.getId()));
+    public CheckoutRequest create(CheckoutRequest checkoutRequest){
+        if(checkoutRequestes.keySet().contains(checkoutRequest.getId())) {
+            throw new IllegalArgumentException(String.format("CheckoutRequest %s already exists", checkoutRequest.getId()));
         }
-        addresses.put(address.getId(), address);
-        return address;
+        checkoutRequestes.put(checkoutRequest.getId(), checkoutRequest);
+        return checkoutRequest;
     }
 
-    public Address read(String cartId){
-        return addresses.get(cartId);
+    public CheckoutRequest read(String cartId){
+        return checkoutRequestes.get(cartId);
     }
 
-    public void update(String addressId, Address address){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", address.getId()));
+    public void update(String checkoutRequestId, CheckoutRequest checkoutRequest){
+        if(!checkoutRequestes.keySet().contains(checkoutRequestId)){
+            throw new IllegalArgumentException(String.format("Cannot update because checkoutRequest %s does not exist", checkoutRequest.getId()));
         }
 
-        else addresses.put(addressId, address);
+        else checkoutRequestes.put(checkoutRequestId, checkoutRequest);
     }
 
-    public void delete(String addressId){
-        if(!addresses.keySet().contains(addressId)){
-            throw new IllegalArgumentException(String.format("Cannot update because address %s does not exist", addressId));
+    public void delete(String checkoutRequestId){
+        if(!checkoutRequestes.keySet().contains(checkoutRequestId)){
+            throw new IllegalArgumentException(String.format("Cannot update because checkoutRequest %s does not exist", checkoutRequestId));
         }
-        addresses.remove(addressId);
+        checkoutRequestes.remove(checkoutRequestId);
     }
 }
