@@ -1,6 +1,14 @@
 # Soap-Site
 
-## Running Locally
+## Running Locally With Spring Boot
+```sh
+$ git clone https://github.com/steveboyer/Soap-Store
+$ cd Soap-Store
+$ mvn install
+$ java -jar target/soapstore-1.0.jar
+```
+
+## Running Locally With Heroku CLI
 
 Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
 
