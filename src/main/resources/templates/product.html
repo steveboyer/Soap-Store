@@ -28,12 +28,12 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <img th:src="${product.imageUrl}" class="rounded img-fluid img-thumbnail mb-4">
+                    <img src="" th:src="${product.imageUrl}" class="rounded img-fluid img-thumbnail mb-4">
                     <p class="text-white">Lorem ipsum lorem ipsum lorem ipsum lorem ipgusm</p>
                     <p class="text-white">$5.99</p>
                 </div>
                 <div class="col-md-6" >
-                    <form action="/store/added_to_cart" method="get">
+                    <form action="/cart/added_to_cart" method="get">
                         <input type="hidden" name="prodId" th:value="${product.productId}" />
                         <div class="form-group center-text">
                             <label for="sel-size">Select Size:</label>
@@ -67,13 +67,6 @@
         </div>
     </div>
 </div>
-
-
-</div>
-<!-- /.row -->
-
-</div>
-<!-- /.container -->
 
 <!-- Footer -->
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

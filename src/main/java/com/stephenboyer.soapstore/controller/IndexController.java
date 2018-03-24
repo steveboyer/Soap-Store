@@ -27,7 +27,7 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index(Model model) {
         SquareConnector sq = new SquareConnector();
-        List<Product> products = sq.getProducts();
+        List<Product> products = sq.getProducts(9);
         List<Category> categories = sq.getCategories();
 
         ModelAndView mav = new ModelAndView("index");

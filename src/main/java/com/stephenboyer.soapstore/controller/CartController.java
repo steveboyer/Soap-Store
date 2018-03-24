@@ -24,25 +24,31 @@ public class CartController {
         return mav;
     }
 
-    @RequestMapping(value = "/store/continue" , method = GET)
+    @RequestMapping(value = "/continue" , method = GET)
     public String continue_shopping(){
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/store/added_to_cart", method = GET)
+    @RequestMapping(value = "/added_to_cart", method = GET)
     public ModelAndView added_to_cart(@RequestParam String prodId, @RequestParam long quantity, @RequestParam String size){
-        ModelAndView mav = new ModelAndView("added_to_cart");
+        try {
+            ModelAndView mav = new ModelAndView("added_to_cart");
 
-        // Find product
-        SquareConnector sq = new SquareConnector();
-        Product product = sq.getProduct(prodId);
-        System.out.println("Q: " + quantity);
-        System.out.println("P: " + product);
+            // Find product
+            SquareConnector sq = new SquareConnector();
+            Product product = sq.getProduct(prodId);
+            System.out.println("Q: " + quantity);
+            System.out.println("P: " + product);
+            System.out.println("S: " + size);
 //        System.out.println("s:" + subtotal);//
-        mav.addObject("quantity", quantity);
-        mav.addObject("product", product);
-        mav.addObject("subtotal", 1.00);
+            mav.addObject("quantity", quantity);
+            mav.addObject("product", product);
+            mav.addObject("subtotal", 1.00);
 
-        return mav;
+            return mav;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

@@ -14,7 +14,6 @@ public class Cart implements Serializable {
 //    @GeneratedValue(strategy=GenerationType.AUTO)
     public String id;
 
-
 //    List<CartItem> items;
 
 //    @Column(name = "quantity")

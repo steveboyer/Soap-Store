@@ -200,6 +200,14 @@ ul {
    }
  }
 
+ .category {
+   &:hover {
+     background-color: #9bcccc;
+     color: black;
+     text-decoration: none;
+   }
+ }
+
  .dropdown-menu {
    background-color: #444444;
 
