@@ -11,7 +11,6 @@ public class CartItem {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
     public String id;
-
     private String productId;
     private Integer quantity;
     private String scent;

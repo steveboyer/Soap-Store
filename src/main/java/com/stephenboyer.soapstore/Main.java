@@ -80,18 +80,6 @@ public class Main {
         }
     }
 
-    @RequestMapping("/db/store")
-    String dbstore(Map<String, Object> model){
-        try (Connection connection = dataSource.getConnection()){
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS productss");
-            statement.ex
-        } catch (Exception e) {
-            model.put("message", e.getMessage());
-            return "error";
-        }
-    }
-
     @Bean
     public DataSource dataSource() throws SQLException {
         if (dbUrl == null || dbUrl.isEmpty()) {

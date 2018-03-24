@@ -28,6 +28,14 @@ public class Address {
         this.last_name = last_name;
     }
 
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
     public String getAddress_line_1() {
         return address_line_1;
     }
