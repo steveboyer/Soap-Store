@@ -3,6 +3,7 @@ package com.stephenboyer.soapstore.controller;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.soap.SquareConnector;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,20 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
+@RequestMapping(value = "/cart")
 public class CartController {
-    @RequestMapping(value = "/store/added", method = GET)
-    public ModelAndView added(){
-        ModelAndView mav = new ModelAndView("added_to_cart");
 
-
-        return mav;
-    }
-
-    @RequestMapping(value = "/store/cart", method = GET)
+    @RequestMapping(value = "/", method = GET)
     public ModelAndView cart(){
         ModelAndView mav = new ModelAndView("cart");
-//        SquareConnector sq = new SquareConnector();
-//        sq.getProduct()
 
         return mav;
     }

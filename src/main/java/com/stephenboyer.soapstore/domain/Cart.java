@@ -1,11 +1,14 @@
 package com.stephenboyer.soapstore.domain;
 
 import com.stephenboyer.soapstore.util.Strings;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
 //@Entity
 //@Table(name = "cart")
+
 public class Cart implements Serializable {
 //    @Id
 //    @GeneratedValue(strategy=GenerationType.AUTO)

@@ -6,24 +6,15 @@ import java.util.ArrayList;
 
 
 public class LineItem {
-//    @Id
     public String id;
 
     private String name;
     private Integer quantity;
 
-    private Money base_price_money;
 
-    private ArrayList<Discount> discounts;
-
-    private ArrayList<Tax> taxes;
-
-    public LineItem(String name, Integer quantity, Money base_price_money, ArrayList<Discount> discounts, ArrayList<Tax> taxes) {
+    public LineItem(String name, Integer quantity) {
         this.name = name;
         this.quantity = quantity;
-        this.base_price_money = base_price_money;
-        this.discounts = discounts;
-        this.taxes = taxes;
     }
 
     public String getName() {
@@ -40,30 +31,6 @@ public class LineItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Money getBase_price_money() {
-        return base_price_money;
-    }
-
-    public void setBase_price_money(Money base_price_money) {
-        this.base_price_money = base_price_money;
-    }
-
-    public ArrayList<Discount> getDiscounts() {
-        return discounts;
-    }
-
-    public void setDiscounts(ArrayList<Discount> discounts) {
-        this.discounts = discounts;
-    }
-
-    public ArrayList<Tax> getTaxes() {
-        return taxes;
-    }
-
-    public void setTaxes(ArrayList<Tax> taxes) {
-        this.taxes = taxes;
     }
 
     @Override
