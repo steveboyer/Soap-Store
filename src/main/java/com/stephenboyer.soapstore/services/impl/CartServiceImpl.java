@@ -5,10 +5,10 @@ import com.stephenboyer.soapstore.domain.repository.CartRepository;
 import com.stephenboyer.soapstore.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-@Service
+//
+//@Service
 public class CartServiceImpl implements CartService {
-    @Autowired
+//    @Autowired
     private CartRepository cartRepository;
 
     public Cart create(Cart cart){
