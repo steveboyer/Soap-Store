@@ -19,6 +19,7 @@ package com.stephenboyer.soapstore;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -60,7 +61,6 @@ public class Main {
         return "contact";
     }
 
-
     @RequestMapping("/db")
     String db(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {
@@ -93,16 +93,4 @@ public class Main {
             return new HikariDataSource(config);
         }
     }
-
-//    @Bean
-//    public DataSource dataSource() throws SQLException {
-//        if (dbUrl == null || dbUrl.isEmpty()) {
-//            return new HikariDataSource();
-//        } else {
-//            HikariConfig config = new HikariConfig();
-//            config.setJdbcUrl(dbUrl);
-//            System.out.println("datasrc: " + dbUrl);
-//            return new HikariDataSource(config);
-//        }
-//    }
 }
