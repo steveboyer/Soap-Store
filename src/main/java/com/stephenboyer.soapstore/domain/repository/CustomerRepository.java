@@ -1,9 +1,8 @@
 package com.stephenboyer.soapstore.domain.repository;
 
 import com.stephenboyer.soapstore.domain.Customer;
-import org.springframework.data.repository.CrudRepository;
 
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
+public interface CustomerRepository  {
     Customer create(Customer customer);
     Customer read(String customerId);
     void update(String customerId, Customer customer);
