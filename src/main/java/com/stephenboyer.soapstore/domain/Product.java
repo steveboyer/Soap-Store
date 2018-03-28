@@ -26,7 +26,7 @@ public class Product {
     private Category category;
     private List<ProductVariation> productVariations;
     private String URL;
-    private static AtomicLong idCounter = new AtomicLong(1001);
+//    private static AtomicLong idCounter = new AtomicLong(1001);
 
     private Product(){ }
 

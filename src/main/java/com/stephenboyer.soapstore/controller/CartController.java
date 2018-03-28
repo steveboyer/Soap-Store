@@ -1,5 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
+import com.stephenboyer.soapstore.CatalogHolder;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.soap.SquareConnector;
@@ -44,6 +45,7 @@ public class CartController {
             mav.addObject("quantity", quantity);
             mav.addObject("product", product);
             mav.addObject("subtotal", 1.00);
+            mav.addObject("catalog", CatalogHolder.getCatalog());
 
             return mav;
         } catch (Exception ex) {

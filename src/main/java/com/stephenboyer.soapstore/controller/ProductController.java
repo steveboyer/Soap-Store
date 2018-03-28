@@ -1,5 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
+import com.stephenboyer.soapstore.CatalogHolder;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.domain.ProductVariation;
@@ -25,10 +26,10 @@ public class ProductController {
         SquareConnector sq = new SquareConnector();
 
 //        List<Product> products = sq.getProducts(); // All products
-        List<Category> categories = sq.getCategories(); // All categories
+//        List<Category> categories = sq.getCategories(); // All categories
         Product product = sq.getProduct(id); // Product on this page
 
-        mav.addObject("categories", categories);
+        mav.addObject("catalog", CatalogHolder.getCatalog());
 //        mav.addObject("products", products);
 
         // Get product as defined in URL
@@ -36,6 +37,7 @@ public class ProductController {
 
         // Get list of products and set variables for Thymeleaf
         mav.addObject("product", product);
+        System.out.println(product);
         List<ProductVariation> variations = product.getProductVariations();
 
         // List

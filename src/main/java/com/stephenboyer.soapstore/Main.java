@@ -41,7 +41,7 @@ import java.util.Map;
 @SpringBootApplication
 public class Main {
 
-//    @Value("${spring.datasource.url}")
+//    @Value("${spring.datasource.url}")sprin
 //    private String dbUrl;
 //
 //    @Autowired

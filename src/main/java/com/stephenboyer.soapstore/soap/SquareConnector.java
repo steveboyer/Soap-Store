@@ -42,13 +42,13 @@ public class SquareConnector {
 
     // The environment variable containing a SquareConnector Personal Access Token.
     // This must be set in order for the application to start.
-    private static final String SQUARE_ACCESS_TOKEN = //"sq0atp-uYXIEk8eLXhzk6VgmGW5Bg"; // soapco
-            "sq0atp-jJOFH3zXmUWYJ9JCE4tCCg"; // sboyer307
+    private static final String SQUARE_ACCESS_TOKEN = "sq0atp-uYXIEk8eLXhzk6VgmGW5Bg"; // soapco
+            //"sq0atp-jJOFH3zXmUWYJ9JCE4tCCg"; // sboyer307
 
     // The environment variable containing a SquareConnector application ID.
     // This must be set in order for the application to start.
-    private static final String SQUARE_APP_ID = //"sq0idp-YnG56TTAk0bDcdnACTa0hw"; // -> soapco
-            "sq0idp-fARlRs34GZixnZL0Faptlw"; // -> sboyer307
+    private static final String SQUARE_APP_ID = "sq0idp-YnG56TTAk0bDcdnACTa0hw"; // -> soapco
+            //"sq0idp-fARlRs34GZixnZL0Faptlw"; // -> sboyer307
 
     //public static final String BASE_URL = "https://connect.squareup.com";
 
@@ -178,7 +178,7 @@ public class SquareConnector {
     public List<Product> getProducts(int number){
         List<Product> products = new ArrayList<>();
         getSquareCatalog(number).forEach(p -> products.add(new Product(p)));
-
+        products.stream().forEach(p -> System.out.println(p));
         return products;
     }
 
@@ -232,7 +232,7 @@ public class SquareConnector {
                     .findFirst()
                     .orElseThrow(() -> new IllegalStateException(
                             "At least one location must support card processing"));
-            System.out.println(location.getAddress());
+            //System.out.println(location.getAddress());
             return location;
         } catch (NullPointerException ex){
             // Location does not have ability to process payments

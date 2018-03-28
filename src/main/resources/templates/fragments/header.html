@@ -37,7 +37,7 @@
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <div th:each="category : ${categories}" class="category col-lg-4 col-md-6 mb-4">
+                        <div th:each="category : ${catalog.categories}" class="category col-lg-4 col-md-6 mb-4">
                             <a class="dropdown-item" th:href="${category.Url}" th:text="${category.name}"></a>
                         </div>
                     </div>

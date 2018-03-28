@@ -36,7 +36,7 @@
         <!--</div>-->
         <div class="container">
             <ul id="categories">
-                <div th:each="category : ${categories}">
+                <div th:each="category : ${catalog.categories}">
                     <li>
                         <a href="#" class="category-list-item" th:href="${category.Url}" th:text="${category.name}">Bar Soaps</a>
                     </li>

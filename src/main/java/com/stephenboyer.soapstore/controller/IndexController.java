@@ -1,5 +1,7 @@
 package com.stephenboyer.soapstore.controller;
 
+import com.stephenboyer.soapstore.CatalogHolder;
+import com.stephenboyer.soapstore.domain.Catalog;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.soap.SquareConnector;
@@ -26,13 +28,11 @@ public class IndexController {
     // Homepage
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index(Model model) {
-        SquareConnector sq = new SquareConnector();
-        List<Product> products = sq.getProducts(9);
-        List<Category> categories = sq.getCategories();
+        Catalog catalog = CatalogHolder.getCatalog();
 
         ModelAndView mav = new ModelAndView("index");
-        mav.addObject("categories", categories);
-        mav.addObject("products", products);
+
+        mav.addObject("catalog", catalog);
 
         return mav;
     }
