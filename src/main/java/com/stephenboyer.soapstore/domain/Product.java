@@ -25,6 +25,16 @@ public class Product {
     private String categoryId;
     private Category category;
     private List<ProductVariation> productVariations;
+    private List<VariationType> variationTypes = new ArrayList<>();
+
+
+    enum VariationType {
+        SIZE_OZ,
+        SIZE,
+        SCENT,
+        NONE
+    }
+
     private String URL;
 //    private static AtomicLong idCounter = new AtomicLong(1001);
 
@@ -49,7 +59,10 @@ public class Product {
         description = catalogItem.getDescription();
 
         // Use image coming soon placeholder if image isn't present
-        imageUrl = (catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty() ? "../../" : catalogItem.getImageUrl());
+        // @TODO improve
+        imageUrl = (catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty() ? "../../images/image_coming_soon_2.png" : catalogItem.getImageUrl());
+
+        // Category id
         categoryId = catalogItem.getCategoryId();
 
         // Product's URL, '/store/item/93HM93JE...'
@@ -58,11 +71,28 @@ public class Product {
 
 
         try {
-            variations.forEach(v -> productVariations.add(new ProductVariation(v.getItemVariationData())));
+            variations.forEach(this::setVariation);
         } catch (NullPointerException ex){
             ex.printStackTrace(); // TODO
         }
     }
+
+    private void setVariation(CatalogObject variation) {
+        productVariations.add(new ProductVariation(variation.getItemVariationData()));
+
+        String sku = variation.getItemVariationData().getSku();
+
+        if(sku.contains("oz")){
+            if(!variationTypes.contains(VariationType.SIZE_OZ)){
+                variationTypes.add(VariationType.SIZE_OZ);
+            }
+        }
+
+//        if(sku.contains("large") || sku.contains("small"))
+
+
+    }
+
 
     public String getDescription() {
         return description;

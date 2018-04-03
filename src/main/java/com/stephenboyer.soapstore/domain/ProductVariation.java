@@ -17,6 +17,7 @@ public class ProductVariation  {
     String name;
     long price;
 
+
     public ProductVariation(CatalogItemVariation variation){
         sku = variation.getSku();
         variationId = variation.getItemId();

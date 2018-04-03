@@ -42,13 +42,11 @@ public class SquareConnector {
 
     // The environment variable containing a SquareConnector Personal Access Token.
     // This must be set in order for the application to start.
-    private static final String SQUARE_ACCESS_TOKEN = "sq0atp-uYXIEk8eLXhzk6VgmGW5Bg"; // soapco
-            //"sq0atp-jJOFH3zXmUWYJ9JCE4tCCg"; // sboyer307
+    private static final String SQUARE_ACCESS_TOKEN = loadEnvironmentVariable("ACCESS_TOKEN");
 
     // The environment variable containing a SquareConnector application ID.
     // This must be set in order for the application to start.
-    private static final String SQUARE_APP_ID = "sq0idp-YnG56TTAk0bDcdnACTa0hw"; // -> soapco
-            //"sq0idp-fARlRs34GZixnZL0Faptlw"; // -> sboyer307
+    private static final String SQUARE_APP_ID = loadEnvironmentVariable("APPLICATION_ID");
 
     //public static final String BASE_URL = "https://connect.squareup.com";
 
@@ -182,7 +180,7 @@ public class SquareConnector {
         return products;
     }
 
-    public String mustLoadEnvironmentVariable(String name) {
+    public static String loadEnvironmentVariable(String name) {
         String value = System.getenv(name);
         if (value == null || value.length() == 0) {
             throw new IllegalStateException(

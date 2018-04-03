@@ -10,7 +10,7 @@ public class Catalog {
 
     public Catalog(){
         SquareConnector sq = new SquareConnector();
-        products = sq.getProducts(9);
+        products = sq.getProducts(0);
         categories = sq.getCategories();
     }
 
