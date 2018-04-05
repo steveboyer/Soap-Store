@@ -5,24 +5,25 @@ import com.stephenboyer.soapstore.util.Strings;
 
 public class ProductVariation  {
 //    @Id
-    public String id;
+    private String id;
 
     // Product id for variation is different than for object
-    String variationId;
+    private String variationId;
 
     // Unique to variation
-    String sku;
+    private String sku;
 
     // Variation name
-    String name;
-    long price;
+    private String name;
+    private long price;
 
 
     public ProductVariation(CatalogItemVariation variation){
         sku = variation.getSku();
         variationId = variation.getItemId();
         name = variation.getName();
-        price = variation.getPriceMoney().getAmount();
+        // @TODO fix NPE below
+        //price = variation.getPriceMoney().getAmount();
     }
 
     public String getId() {
@@ -36,5 +37,37 @@ public class ProductVariation  {
     @Override
     public String toString() {
         return Strings.toString(this);
+    }
+
+    public String getVariationId() {
+        return variationId;
+    }
+
+    public void setVariationId(String variationId) {
+        this.variationId = variationId;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
     }
 }

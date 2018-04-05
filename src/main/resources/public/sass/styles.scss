@@ -161,7 +161,7 @@ ul {
 }
 
 .big-card {
-  background: $morning-glory;
+  background: lighten($card-background, 10%);
   border-radius: 5px;
   border-color: white;
   border-bottom-width: 2px;

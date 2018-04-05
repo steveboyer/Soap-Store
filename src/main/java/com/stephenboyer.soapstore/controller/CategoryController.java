@@ -1,5 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
+import com.stephenboyer.soapstore.CatalogHolder;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 //import com.stephenboyer.soapstore.soap.SquareConnector;
@@ -25,7 +26,8 @@ public class CategoryController {
         List<Product> products = sq.getProductsInCategory(current);
         List<Category> categories = sq.getCategories();
 
-        mav.addObject("categories", categories);
+//        mav.addObject("categories", categories);
+        mav.addObject("catalog", CatalogHolder.getCatalog());
         mav.addObject("products", products);
         mav.addObject("category", current);
 

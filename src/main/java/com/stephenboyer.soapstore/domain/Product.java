@@ -45,8 +45,6 @@ public class Product {
         CatalogItem catalogItem = catalogObject.getItemData();
         List<CatalogObject> variations = catalogItem.getVariations();
 
-
-
         // List of variations like diff smells/flavors
         productVariations = new ArrayList<>();
 
@@ -82,7 +80,7 @@ public class Product {
 
         String sku = variation.getItemVariationData().getSku();
 
-        if(sku.contains("oz")){
+        if(sku != null && sku.contains("oz")){
             if(!variationTypes.contains(VariationType.SIZE_OZ)){
                 variationTypes.add(VariationType.SIZE_OZ);
             }

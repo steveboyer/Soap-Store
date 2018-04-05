@@ -24,16 +24,6 @@
                 th:src="@{/images/LSC_logo.svg}"
                 alt="Laramie Soap Co."/>
         </h1>
-        <!--<div class="list-group" id="categories">-->
-        <!--<a href="#" class="list-group-item">Bar Soaps</a>-->
-        <!--<a href="#" class="list-group-item">Bath Bombs</a>-->
-        <!--<a href="#" class="list-group-item">Beard Products</a>-->
-        <!--<a href="#" class="list-group-item">Hand Lotions</a>-->
-        <!--<a href="#" class="list-group-item">Body Lotions</a>-->
-        <!--<a href="#" class="list-group-item">Lip Balms</a>-->
-        <!--<a href="#" class="list-group-item">Sugar Scrubs</a>-->
-        <!--<a href="#" class="list-group-item">Jewelry</a>-->
-        <!--</div>-->
         <div class="container">
             <ul id="categories">
                 <div th:each="category : ${catalog.categories}">

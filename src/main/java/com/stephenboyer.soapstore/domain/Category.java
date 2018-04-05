@@ -7,13 +7,13 @@ public class Category {
     public String id;
 
     private String name;
-    private String URL;
+    private String url;
     private String categoryId;
 
     public Category(String name, String id) {
         this.name = name;
         this.id = id;
-        this.URL = "/store/category/" + id;
+        this.url = "/store/category/" + id;
         this.categoryId = id;
     }
 
@@ -34,11 +34,11 @@ public class Category {
     }
 
     public String getUrl() {
-        return URL;
+        return url;
     }
 
     public void setURL(String url) {
-        this.URL = url;
+        this.url = url;
     }
 
     @Override
