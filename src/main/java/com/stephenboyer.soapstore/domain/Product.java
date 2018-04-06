@@ -25,15 +25,11 @@ public class Product {
     private String categoryId;
     private Category category;
     private List<ProductVariation> productVariations;
-    private List<VariationType> variationTypes = new ArrayList<>();
+    private Boolean variationOz = false;
+    private List<String> variationOzVals = new ArrayList<>();
+    private Boolean variationLgSm = false;
+    private List<String> variationLgSmVals = new ArrayList<>();
 
-
-    enum VariationType {
-        SIZE_OZ,
-        SIZE,
-        SCENT,
-        NONE
-    }
 
     private String URL;
 //    private static AtomicLong idCounter = new AtomicLong(1001);
@@ -75,22 +71,62 @@ public class Product {
         }
     }
 
+    public List<String> getVariationOzVals() {
+        return variationOzVals;
+    }
+
+    public void setVariationOzVals(List<String> variationOzVals) {
+        this.variationOzVals = variationOzVals;
+    }
+
+    public Boolean getVariationLgSm() {
+        return variationLgSm;
+    }
+
+    public void setVariationLgSm(Boolean variationLgSm) {
+        this.variationLgSm = variationLgSm;
+    }
+
+    public List<String> getVariationLgSmVals() {
+        return variationLgSmVals;
+    }
+
+    public void setVariationLgSmVals(List<String> variationLgSmVals) {
+        this.variationLgSmVals = variationLgSmVals;
+    }
+
     private void setVariation(CatalogObject variation) {
         productVariations.add(new ProductVariation(variation.getItemVariationData()));
 
         String sku = variation.getItemVariationData().getSku();
 
         if(sku != null && sku.contains("oz")){
-            if(!variationTypes.contains(VariationType.SIZE_OZ)){
-                variationTypes.add(VariationType.SIZE_OZ);
-            }
+          variationOz = true;
+          variationOzVals.add(sku.split("_")[2]);
         }
+
+        if(sku != null && (sku.contains("large") || sku.contains("small"))){
+            variationLgSm = true;
+            variationOzVals.add(sku.split("_")[2]);
+        }
+
+
+
+
+
 
 //        if(sku.contains("large") || sku.contains("small"))
 
 
     }
 
+    public Boolean getVariationOz() {
+        return variationOz;
+    }
+
+    public void setVariationOz(Boolean variationOz) {
+        this.variationOz = variationOz;
+    }
 
     public String getDescription() {
         return description;

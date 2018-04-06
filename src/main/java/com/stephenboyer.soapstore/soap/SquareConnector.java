@@ -32,6 +32,7 @@ import com.squareup.connect.auth.OAuth;
 import com.squareup.connect.models.*;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
+import com.stephenboyer.soapstore.domain.ProductVariation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +168,16 @@ public class SquareConnector {
 
         // Get catalog, create product, map category to product, add to list
         getSquareCatalog(0).forEach(p -> products.add(mapProduct(categories, new Product(p))));
-        products.stream().forEach(p -> System.out.println(p));
+//        products.stream().forEach(p -> System.out.println(p));
+        System.out.println();
+//        products.forEach(p -> p.getProductVariations().forEach(q -> System.out.println( q.getSku())));
+
+        for(Product product : products){
+            System.out.println();
+            for(ProductVariation variation : product.getProductVariations()){
+                System.out.println(variation.getSku());
+            }
+        }
 
         return products;
     }
@@ -176,8 +186,17 @@ public class SquareConnector {
     public List<Product> getProducts(int number){
         List<Product> products = new ArrayList<>();
         getSquareCatalog(number).forEach(p -> products.add(new Product(p)));
-        products.stream().forEach(p -> System.out.println(p));
+//        products.stream().forEach(p -> System.out.println(p));
+
+        for(Product product : products){
+            System.out.println();
+            for(ProductVariation variation : product.getProductVariations()){
+                System.out.println(variation.getSku());
+            }
+        }
+
         return products;
+
     }
 
     public static String loadEnvironmentVariable(String name) {

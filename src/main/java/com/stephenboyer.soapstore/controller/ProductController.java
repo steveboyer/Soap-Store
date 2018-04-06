@@ -5,11 +5,15 @@ import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.domain.ProductVariation;
 import com.stephenboyer.soapstore.soap.SquareConnector;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.util.List;
 
@@ -17,7 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class ProductController {
-
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class.getName());
     // Product page
     @RequestMapping(value = "/store/item/{id}", method = GET)
     public ModelAndView product(Model model, @PathVariable String id) {
@@ -37,7 +41,7 @@ public class ProductController {
 
         // Get list of products and set variables for Thymeleaf
         mav.addObject("product", product);
-        System.out.println(product);
+        log.info(product.toString());
         List<ProductVariation> variations = product.getProductVariations();
 
         // List

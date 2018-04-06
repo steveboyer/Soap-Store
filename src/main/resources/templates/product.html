@@ -43,24 +43,48 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                        <div class="form-group center-text">
-                            <label for="sel-size">Select Size:</label>
-                            <select name="size" class="form-control" id="sel-size">
-                                <option value="2oz">2 oz</option>
-                                <option value="4oz">4 oz</option>
-                                <option value="8oz">8 oz</option>
-                            </select>
+
+                        <div th:if="${product.getVariationOz()}">
+                            <div class="form-group center-text">
+                                <label for="sel-size">Select Size:</label>
+                                <!--<select name="size" class="form-control" id="sel-size">-->
+                                    <!--<option value="2oz">2 oz</option>-->
+                                    <!--<option value="4oz">4 oz</option>-->
+                                    <!--<option value="8oz">8 oz</option>-->
+                                <!--</select>-->
+                                <select name="size" class="form-control" id="sel-size">
+                                    <div th:each="size : ${product.getVariationOzVals()}" class="col-lg-4 col-md-6 mb-4">
+                                        <option th:value="${size}" th:text="${size}"></option>
+                                    </div>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="form-group center-text">
-                            <label for="sel-scent">Select Scent:</label>
-                            <select name="scent" class="form-control" id="sel-scent">
-                                <option value="lavender">Lavender</option>
-                                <option value="rose">Rose</option>
-                                <option value="cherry">Cherry</option>
-                                <option value="fragrance_free">Fragrance Free</option>
-                            </select>
+                        <div th:if="${product.getVariationLgSm()}">
+                            <div class="form-group center-text">
+                                <label for="sel-size">Select Size:</label>
+                                <!--<select name="size" class="form-control" id="sel-size">-->
+                                <!--<option value="2oz">2 oz</option>-->
+                                <!--<option value="4oz">4 oz</option>-->
+                                <!--<option value="8oz">8 oz</option>-->
+                                <!--</select>-->
+                                <select name="size" class="form-control" id="sel-size">
+                                    <div th:each="size : ${product.getVariationLgSmVals()}" class="col-lg-4 col-md-6 mb-4">
+                                        <option th:value="${size}" th:text="${size}"></option>
+                                    </div>
+                                </select>
+                            </div>
                         </div>
+
+                        <!--<div class="form-group center-text">-->
+                            <!--<label for="sel-scent">Select Scent:</label>-->
+                            <!--<select name="scent" class="form-control" id="sel-scent">-->
+                                <!--<option value="lavender">Lavender</option>-->
+                                <!--<option value="rose">Rose</option>-->
+                                <!--<option value="cherry">Cherry</option>-->
+                                <!--<option value="fragrance_free">Fragrance Free</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
                         <button type="submit" class="cart_button" id="add_button">Add to cart</button>
                     </form>
                 </div>
