@@ -29,4 +29,18 @@ public class Catalog {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+//    public ProductVariation findProductVariationBySku(String sku){
+//        for(Product product : products){
+//            for(ProductVariation productVariation : product.getProductVariations()){
+//                if(productVariation.getSku().equalsIgnoreCase(sku)){
+//                    return productVariation;
+//                }
+//            }
+//        }
+//    }
+
+//    class
+        // Use comparator? No, use HashMap<>(). This will use more ram, but will be faster. HashMap should probably be used.
+
 }

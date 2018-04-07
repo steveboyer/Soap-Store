@@ -14,7 +14,6 @@ public class Order{
     String merchant_support_email;
 
     String reference_id;
-    List<LineItem> line_items;
 
     public Order(){
 

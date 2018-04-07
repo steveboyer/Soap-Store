@@ -1,5 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
+import com.stephenboyer.soapstore.CatalogHolder;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.soap.SquareConnector;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class CheckoutController {
     @RequestMapping(value="/store/checkout", method = RequestMethod.GET)
     public ModelAndView checkout(){
         ModelAndView mav = new ModelAndView("checkout");
-
+        mav.addObject("catalog", CatalogHolder.getCatalog());
         //mav.addObject("")
 
         return mav;

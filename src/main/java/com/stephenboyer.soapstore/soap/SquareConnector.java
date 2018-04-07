@@ -27,15 +27,18 @@ import com.squareup.connect.ApiException;
 import com.squareup.connect.Configuration;
 import com.squareup.connect.api.CatalogApi;
 import com.squareup.connect.api.LocationsApi;
+import com.squareup.connect.api.TransactionsApi;
 import com.squareup.connect.api.V1ItemsApi;
 import com.squareup.connect.auth.OAuth;
 import com.squareup.connect.models.*;
 import com.stephenboyer.soapstore.domain.Category;
+import com.stephenboyer.soapstore.domain.NonceForm;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.domain.ProductVariation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class SquareConnector {
@@ -86,6 +89,28 @@ public class SquareConnector {
         }
 
     }
+
+
+    public String charge(NonceForm nonceForm) throws ApiException {
+        // To learn more about splitting transactions with additional recipients,
+        // see the Transactions API documentation on our [developer site]
+        // (https://docs.connect.squareup.com/payments/transactions/overview#mpt-overview).
+        ChargeRequest chargeRequest = new ChargeRequest()
+                .idempotencyKey(UUID.randomUUID().toString())
+                .amountMoney(new Money().amount(1_00L).currency(Money.CurrencyEnum.USD))
+                .cardNonce(nonceForm.getNonce())
+                .note("From a Square sample Java app");
+
+        TransactionsApi transactionsApi = new TransactionsApi();
+        transactionsApi.setApiClient(squareClient);
+
+        ChargeResponse response = transactionsApi.charge(squareLocation.getId(), chargeRequest);
+
+         return response.getTransaction().getId();
+
+
+    }
+
 
     public Product getProduct(String id){
         return new Product(getCatalogObject(id));
@@ -307,6 +332,7 @@ public class SquareConnector {
         }
 
         products.forEach(p -> System.out.println(p.getName()));
+
         return products;
 
 

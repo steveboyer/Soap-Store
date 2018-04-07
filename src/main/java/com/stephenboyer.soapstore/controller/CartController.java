@@ -2,21 +2,20 @@ package com.stephenboyer.soapstore.controller;
 
 import com.stephenboyer.soapstore.CatalogHolder;
 import com.stephenboyer.soapstore.domain.Cart;
-import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
+import com.stephenboyer.soapstore.domain.ProductVariation;
 import com.stephenboyer.soapstore.soap.SquareConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+
+import java.util.HashMap;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -42,8 +41,18 @@ public class CartController {
         return "redirect:/";
     }
 
+    public void addItem(ProductVariation product, int quantity){
+        HashMap<ProductVariation, Integer> products = cart.getLineItems();
+
+        Integer currentQuantity = products.getOrDefault(product, 0);
+
+        products.put(product, quantity + currentQuantity);
+
+        log.info(cart.toString());
+    }
+
     @RequestMapping(value = "/added_to_cart", method = GET)
-    public ModelAndView added_to_cart(@RequestParam String prodId, @RequestParam long quantity, @RequestParam String size){
+    public ModelAndView added_to_cart(@RequestParam String prodId, @RequestParam long quantity, @RequestParam(value = "size", required = false, defaultValue = "") String sku){
         try {
             ModelAndView mav = new ModelAndView("added_to_cart");
 
@@ -52,7 +61,13 @@ public class CartController {
             Product product = sq.getProduct(prodId);
             System.out.println("Q: " + quantity);
             System.out.println("P: " + product);
-            System.out.println("S: " + size);
+            System.out.println("S: " + sku);
+
+
+            // Add item to cart
+            // Have to find correct ProductVariation
+//            cart.addItem(CatalogHolder.findProductVariantBySKU(product, sku), quantity);
+//            addItem();
 //        System.out.println("s:" + subtotal);//
             mav.addObject("quantity", quantity);
             mav.addObject("product", product);
