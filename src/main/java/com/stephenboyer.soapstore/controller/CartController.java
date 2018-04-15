@@ -29,10 +29,13 @@ public class CartController {
     private Cart cart;
 
 
-    @RequestMapping(value = "/", method = GET)
+    @RequestMapping(value = "/cart", method = GET)
     public ModelAndView cart(){
         ModelAndView mav = new ModelAndView("cart");
 
+        String view = "cart";
+        mav.addObject("view", view );
+        mav.addObject("catalog", CatalogHolder.getCatalog());
         return mav;
     }
 
@@ -74,10 +77,13 @@ public class CartController {
             mav.addObject("subtotal", 1.00);
             mav.addObject("catalog", CatalogHolder.getCatalog());
 
+
+
+
             log.info(cart.toString());
 
-
-
+            String view = "cart";
+            mav.addObject("view", view );
 
 
             return mav;

@@ -1,301 +1,438 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+    <!--&lt;!&ndash;/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/&ndash;&gt;-->
+
+    <!--&lt;!&ndash; link to the SqPaymentForm library &ndash;&gt;-->
+    <!--<script type="text/javascript" src="https://js.squareup.com/v2/paymentform">-->
+    <!--</script>-->
+
+    <!--<script src="https://js.squareup.com/v2/paymentform" type="text/javascript">-->
+    <!--</script>-->
+    <!--<script>-->
+        <!--var applicationId = '[[${addId}]]'; // <&#45;&#45; This is set to a real value when it's rendered by the template in Main.java-->
+        <!--var locationId = '[[${locationId}]]'; // <&#45;&#45; This is set to a real value when it's rendered by the template in Main.java-->
+        <!--// Make sure the application ID is set before continuing.-->
+        <!--if (applicationId == '' || locationId == '') {-->
+            <!--alert('You need to provide a value for applicationId and locationId.');-->
+        <!--}-->
+        <!--/*-->
+        <!--* function: requestCardNonce-->
+        <!--*-->
+        <!--* requestCardNonce is triggered when the "Pay with credit card" button is-->
+        <!--* clicked-->
+        <!--*-->
+        <!--* Modifying this function is not required, but can be customized if you-->
+        <!--* wish to take additional action when the form button is clicked.-->
+        <!--*/-->
+        <!--function requestCardNonce(event) {-->
+
+            <!--// Don't submit the form until SqPaymentForm returns with a nonce-->
+            <!--event.preventDefault();-->
+
+            <!--// Request a nonce from the SqPaymentForm object-->
+            <!--paymentForm.requestCardNonce();-->
+        <!--}-->
+
+        <!--// Create and initialize a payment form object-->
+        <!--var paymentForm = new SqPaymentForm({-->
+
+            <!--// Initialize the payment form elements-->
+            <!--applicationId: applicationId,-->
+            <!--locationId: locationId,-->
+            <!--inputClass: 'sq-input',-->
+
+            <!--// Customize the CSS for SqPaymentForm iframe elements-->
+            <!--inputStyles: [{-->
+                <!--fontSize: '.9em'-->
+            <!--}],-->
+
+            <!--// Initialize Apple Pay placeholder ID-->
+            <!--applePay: {-->
+                <!--elementId: 'sq-apple-pay'-->
+            <!--},-->
+
+            <!--// Initialize Masterpass placeholder ID-->
+            <!--masterpass: {-->
+                <!--elementId: 'sq-masterpass'-->
+            <!--},-->
+
+            <!--// Initialize the credit card placeholders-->
+            <!--cardNumber: {-->
+                <!--elementId: 'sq-card-number',-->
+                <!--placeholder: '•••• •••• •••• ••••'-->
+            <!--},-->
+            <!--cvv: {-->
+                <!--elementId: 'sq-cvv',-->
+                <!--placeholder: 'CVV'-->
+            <!--},-->
+            <!--expirationDate: {-->
+                <!--elementId: 'sq-expiration-date',-->
+                <!--placeholder: 'MM/YY'-->
+            <!--},-->
+            <!--postalCode: {-->
+                <!--elementId: 'sq-postal-code'-->
+            <!--},-->
+
+            <!--// SqPaymentForm callback functions-->
+            <!--callbacks: {-->
+
+                <!--/*-->
+                <!--* callback function: methodsSupported-->
+                <!--* Triggered when: the page is loaded.-->
+                <!--*/-->
+                <!--methodsSupported: function (methods) {-->
+
+                    <!--var applePayBtn = document.getElementById('sq-apple-pay');-->
+                    <!--var applePayLabel = document.getElementById('sq-apple-pay-label');-->
+                    <!--var masterpassBtn = document.getElementById('sq-masterpass');-->
+                    <!--var masterpassLabel = document.getElementById('sq-masterpass-label');-->
+
+                    <!--// Only show the button if Apple Pay for Web is enabled-->
+                    <!--// Otherwise, display the wallet not enabled message.-->
+                    <!--if (methods.applePay === true) {-->
+                        <!--applePayBtn.style.display = 'inline-block';-->
+                        <!--applePayLabel.style.display = 'none' ;-->
+                    <!--}-->
+                    <!--// Only show the button if Masterpass is enabled-->
+                    <!--// Otherwise, display the wallet not enabled message.-->
+                    <!--if (methods.masterpass === true) {-->
+                        <!--masterpassBtn.style.display = 'inline-block';-->
+                        <!--masterpassLabel.style.display = 'none';-->
+                    <!--}-->
+                <!--},-->
+
+                <!--/*-->
+                <!--* callback function: createPaymentRequest-->
+                <!--* Triggered when: a digital wallet payment button is clicked.-->
+                <!--*/-->
+                <!--createPaymentRequest: function () {-->
+
+                    <!--var paymentRequestJson = {-->
+                        <!--requestShippingAddress: true,-->
+                        <!--currencyCode: "USD",-->
+                        <!--countryCode: "US",-->
+                        <!--total: {-->
+                            <!--label: "MERCHANT NAME",-->
+                            <!--amount: "10.00",-->
+                            <!--pending: false-->
+                        <!--}-->
+                    <!--};-->
+                    <!--return paymentRequestJson ;-->
+                <!--},-->
+
+                <!--/*-->
+                <!--* callback function: cardNonceResponseReceived-->
+                <!--* Triggered when: SqPaymentForm completes a card nonce request-->
+                <!--*/-->
+                <!--cardNonceResponseReceived: function(errors, nonce, cardData) {-->
+                    <!--if (errors) {-->
+                        <!--// Log errors from nonce generation to the Javascript console-->
+                        <!--console.log("Encountered errors:");-->
+                        <!--errors.forEach(function(error) {-->
+                            <!--console.log('  ' + error.message);-->
+                        <!--});-->
+
+                        <!--return;-->
+                    <!--}-->
+
+                    <!--alert('Nonce received: ' + nonce); /* FOR TESTING ONLY */-->
+
+                    <!--// Assign the nonce value to the hidden form field-->
+                    <!--document.getElementById('card-nonce').value = nonce;-->
+
+                    <!--// POST the nonce form to the payment processing page-->
+                    <!--document.getElementById('nonce-form').submit();-->
+
+                <!--},-->
+
+                <!--/*-->
+                <!--* callback function: unsupportedBrowserDetected-->
+                <!--* Triggered when: the page loads and an unsupported browser is detected-->
+                <!--*/-->
+                <!--unsupportedBrowserDetected: function() {-->
+                    <!--/* PROVIDE FEEDBACK TO SITE VISITORS */-->
+                <!--},-->
+
+                <!--/*-->
+                <!--* callback function: inputEventReceived-->
+                <!--* Triggered when: visitors interact with SqPaymentForm iframe elements.-->
+                <!--*/-->
+                <!--inputEventReceived: function(inputEvent) {-->
+                    <!--switch (inputEvent.eventType) {-->
+                        <!--case 'focusClassAdded':-->
+                            <!--/* HANDLE AS DESIRED */-->
+                            <!--break;-->
+                        <!--case 'focusClassRemoved':-->
+                            <!--/* HANDLE AS DESIRED */-->
+                            <!--break;-->
+                        <!--case 'errorClassAdded':-->
+                            <!--/* HANDLE AS DESIRED */-->
+                            <!--break;-->
+                        <!--case 'errorClassRemoved':-->
+                            <!--/* HANDLE AS DESIRED */-->
+                            <!--break;-->
+                        <!--case 'cardBrandChanged':-->
+                            <!--/* HANDLE AS DESIRED */-->
+                            <!--break;-->
+                        <!--case 'postalCodeChanged':-->
+                            <!--/* HANDLE AS DESIRED */-->
+                            <!--break;-->
+                    <!--}-->
+                <!--},-->
+
+                <!--/*-->
+                <!--* callback function: paymentFormLoaded-->
+                <!--* Triggered when: SqPaymentForm is fully loaded-->
+                <!--*/-->
+                <!--paymentFormLoaded: function() {-->
+                    <!--/* HANDLE AS DESIRED */-->
+                <!--}-->
+            <!--}-->
+        <!--});-->
+    <!--</script>-->
+
+    <!--<style type="text/css">-->
+        <!--/* Define how SqPaymentForm iframes should look */-->
+        <!--.sq-input {-->
+            <!--border: 1px solid rgb(223, 223, 223);-->
+            <!--outline-offset: -2px;-->
+            <!--margin-bottom: 5px;-->
+            <!--display: inline-block;-->
+        <!--}-->
+
+        <!--/* Define how SqPaymentForm iframes should look when they have focus */-->
+        <!--.sq-input&#45;&#45;focus {-->
+            <!--outline: 5px auto rgb(59, 153, 252);-->
+        <!--}-->
+
+        <!--/* Define how SqPaymentForm iframes should look when they contain invalid values */-->
+        <!--.sq-input&#45;&#45;error {-->
+            <!--outline: 5px auto rgb(255, 97, 97);-->
+        <!--}-->
+
+        <!--/* Customize the "Pay with Credit Card" button */-->
+        <!--.button-credit-card {-->
+            <!--min-width: 200px;-->
+            <!--min-height: 20px;-->
+            <!--padding: 0;-->
+            <!--margin: 5px;-->
+            <!--line-height: 20px;-->
+            <!--box-shadow: 2px 2px 1px rgb(200, 200, 200);-->
+            <!--background: rgb(255, 255, 255);-->
+            <!--border-radius: 5px;-->
+            <!--border: 1px solid rgb(200, 200, 200);-->
+            <!--font-weight: bold;-->
+            <!--cursor:pointer;-->
+        <!--}-->
+
+
+        <!--/* Customize the "{{Wallet}} not enabled" message */-->
+        <!--.wallet-not-enabled {-->
+            <!--min-width: 200px;-->
+            <!--min-height: 40px;-->
+            <!--max-height: 64px;-->
+            <!--padding: 0;-->
+            <!--margin: 10px;-->
+            <!--line-height: 40px;-->
+            <!--background: #eee;-->
+            <!--border-radius: 5px;-->
+            <!--font-weight: lighter;-->
+            <!--font-style: italic;-->
+            <!--font-family: inherit;-->
+            <!--display: block;-->
+        <!--}-->
+
+        <!--/* Customize the Apple Pay on the Web button */-->
+        <!--.button-apple-pay {-->
+            <!--min-width: 200px;-->
+            <!--min-height: 40px;-->
+            <!--max-height: 64px;-->
+            <!--padding: 0;-->
+            <!--margin: 10px;-->
+            <!--background-image: -webkit-named-image(apple-pay-logo-white);-->
+            <!--background-color: black;-->
+            <!--background-size: 100% 60%;-->
+            <!--background-repeat: no-repeat;-->
+            <!--background-position: 50% 50%;-->
+            <!--border-radius: 5px;-->
+            <!--cursor:pointer;-->
+            <!--display: none;-->
+        <!--}-->
+
+        <!--/* Customize the Masterpass button */-->
+        <!--.button-masterpass {-->
+            <!--min-width: 200px;-->
+            <!--min-height: 40px;-->
+            <!--max-height: 40px;-->
+            <!--padding: 0;-->
+            <!--margin: 10px;-->
+            <!--background-image: url(https://static.masterpass.com/dyn/img/btn/global/mp_chk_btn_147x034px.svg);-->
+            <!--background-color: black;-->
+            <!--background-size: 100% 100%;-->
+            <!--background-repeat: no-repeat;-->
+            <!--background-position: 50% 50%;-->
+            <!--border-radius: 5px;-->
+            <!--border-color: rgb(255, 255, 255);-->
+            <!--cursor:pointer;-->
+            <!--display: none;-->
+        <!--}-->
+
+        <!--#sq-walletbox {-->
+            <!--float:left;-->
+            <!--margin:5px;-->
+            <!--padding:10px;-->
+            <!--text-align: center;-->
+            <!--vertical-align: top;-->
+            <!--font-weight: bold;-->
+        <!--}-->
+
+        <!--#sq-ccbox {-->
+            <!--float:left;-->
+            <!--margin:5px;-->
+            <!--padding:10px;-->
+            <!--text-align: center;-->
+            <!--vertical-align: top;-->
+            <!--font-weight: bold;-->
+        <!--}-->
+    <!--</style>-->
+<!--</head>-->
+
+<!--&lt;!&ndash; Page content &ndash;&gt;-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Navigation &ndash;&gt;-->
+<!--<div class="container">-->
+    <!--&lt;!&ndash;/*/ <th:block th:include="fragments/header :: header"></th:block> /*/&ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; Page Content &ndash;&gt;-->
+<!--<div class="container s-masthead">-->
+    <!--<h3 id="checkout text-center">Checkout</h3>-->
+
+    <!--&lt;!&ndash; Review cart &ndash;&gt;-->
+
+
+    <!--<div class="row mb-4">-->
+        <!--&lt;!&ndash; Shipping &ndash;&gt;-->
+        <!--<div class="col-md-4 col-sm-6" >-->
+            <!--<h5 class="text-white">Shipping Information</h5>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name"/>-->
+            <!--</div>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Address Line 1" aria-label="Address Line 1" aria-describedby="address1"/>-->
+            <!--</div>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Address Line 2" aria-label="Address Line 2" aria-describedby="address2"/>-->
+            <!--</div>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="city"/>-->
+            <!--</div>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="State" aria-label="State" aria-describedby="state"/>-->
+            <!--</div>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Zip Code" aria-label="Zip" aria-describedby="zip"/>-->
+            <!--</div>-->
+            <!--<br>-->
+        <!--&lt;!&ndash; Payment &ndash;&gt;-->
+            <!--<h5 class="text-white">Payment Information</h5>-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Credit Card" aria-label="Credit Card" aria-describedby="card-number"/>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<br>&ndash;&gt;-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="CVV" aria-label="CVV" aria-describedby="ccv"/>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<br>&ndash;&gt;-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Expiration Date" aria-label="Credit Card" aria-describedby="ccv"/>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<br>&ndash;&gt;-->
+            <!--<div class="input-group mb-2">-->
+                <!--<input type="text" class="form-control" placeholder="Billing Zip Code" aria-label="Expiration Date" aria-describedby="expiration-date"/>-->
+            <!--</div>-->
+            <!--<div class="text-white">Pay with a Digital Wallet</div>-->
+            <!--&lt;!&ndash;<div id="sq-apple-pay-label" class="wallet-not-enabled">Apple Pay for Web not enabled</div>&ndash;&gt;-->
+            <!--&lt;!&ndash; Placeholder for Apple Pay for Web button &ndash;&gt;-->
+            <!--<div class="input-group mb-2">-->
+                <!--<button type="button" class="btn">Apple Pay</button>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<div id="sq-masterpass-label" class="wallet-not-enabled">Masterpass not enabled</div>&ndash;&gt;-->
+            <!--&lt;!&ndash; Placeholder for Masterpass button &ndash;&gt;-->
+            <!--<div class="input-group mb-2">-->
+                <!--<button type="button" class="btn">Masterpass</button>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="col-md-4 col-sm-6">-->
+            <!--<h5 class="text-white">Order Details</h5>-->
+            <!--<button class="btn">Place Order</button>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--&lt;!&ndash;-->
+      <!--You should replace the action attribute of the form with the path of-->
+      <!--the URL you want to POST the nonce to (for example, "/process-card")-->
+    <!--&ndash;&gt;-->
+    <!--&lt;!&ndash;<form id="nonce-form" novalidate action="path/to/payment/processing/page" method="post">&ndash;&gt;-->
+    <!--&lt;!&ndash;Pay with a Credit Card&ndash;&gt;-->
+    <!--&lt;!&ndash;<table>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>Card Number:</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td><div id="sq-card-number"></div></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>CVV:</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td><div id="sq-cvv"></div></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>Expiration Date: </td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td><div id="sq-expiration-date"></div></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>Postal Code:</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td><div id="sq-postal-code"></div></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<button id="sq-creditcard" class="button-credit-card" onclick="requestCardNonce(event)">&ndash;&gt;-->
+    <!--&lt;!&ndash;Pay with card&ndash;&gt;-->
+    <!--&lt;!&ndash;</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;-->
+      <!--After a nonce is generated it will be assigned to this hidden input field.-->
+    <!--&ndash;&gt;-->
+    <!--&lt;!&ndash;<input type="hidden" id="card-nonce" name="nonce">&ndash;&gt;-->
+    <!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+
+<!--</div>-->
+
+<!--&lt;!&ndash; /.container &ndash;&gt;-->
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--&lt;!&ndash;/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/&ndash;&gt;-->
+
+<!--</body>-->
+
+<!--</html>-->
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
-
-    <!-- link to the SqPaymentForm library -->
-    <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
-    </script>
-
-    <script src="https://js.squareup.com/v2/paymentform" type="text/javascript">
-    </script>
-    <script>
-        var applicationId = '[[${addId}]]'; // <-- This is set to a real value when it's rendered by the template in Main.java
-        var locationId = '[[${locationId}]]'; // <-- This is set to a real value when it's rendered by the template in Main.java
-        // Make sure the application ID is set before continuing.
-        if (applicationId == '' || locationId == '') {
-            alert('You need to provide a value for applicationId and locationId.');
-        }
-        /*
-        * function: requestCardNonce
-        *
-        * requestCardNonce is triggered when the "Pay with credit card" button is
-        * clicked
-        *
-        * Modifying this function is not required, but can be customized if you
-        * wish to take additional action when the form button is clicked.
-        */
-        function requestCardNonce(event) {
-
-            // Don't submit the form until SqPaymentForm returns with a nonce
-            event.preventDefault();
-
-            // Request a nonce from the SqPaymentForm object
-            paymentForm.requestCardNonce();
-        }
-
-        // Create and initialize a payment form object
-        var paymentForm = new SqPaymentForm({
-
-            // Initialize the payment form elements
-            applicationId: applicationId,
-            locationId: locationId,
-            inputClass: 'sq-input',
-
-            // Customize the CSS for SqPaymentForm iframe elements
-            inputStyles: [{
-                fontSize: '.9em'
-            }],
-
-            // Initialize Apple Pay placeholder ID
-            applePay: {
-                elementId: 'sq-apple-pay'
-            },
-
-            // Initialize Masterpass placeholder ID
-            masterpass: {
-                elementId: 'sq-masterpass'
-            },
-
-            // Initialize the credit card placeholders
-            cardNumber: {
-                elementId: 'sq-card-number',
-                placeholder: '•••• •••• •••• ••••'
-            },
-            cvv: {
-                elementId: 'sq-cvv',
-                placeholder: 'CVV'
-            },
-            expirationDate: {
-                elementId: 'sq-expiration-date',
-                placeholder: 'MM/YY'
-            },
-            postalCode: {
-                elementId: 'sq-postal-code'
-            },
-
-            // SqPaymentForm callback functions
-            callbacks: {
-
-                /*
-                * callback function: methodsSupported
-                * Triggered when: the page is loaded.
-                */
-                methodsSupported: function (methods) {
-
-                    var applePayBtn = document.getElementById('sq-apple-pay');
-                    var applePayLabel = document.getElementById('sq-apple-pay-label');
-                    var masterpassBtn = document.getElementById('sq-masterpass');
-                    var masterpassLabel = document.getElementById('sq-masterpass-label');
-
-                    // Only show the button if Apple Pay for Web is enabled
-                    // Otherwise, display the wallet not enabled message.
-                    if (methods.applePay === true) {
-                        applePayBtn.style.display = 'inline-block';
-                        applePayLabel.style.display = 'none' ;
-                    }
-                    // Only show the button if Masterpass is enabled
-                    // Otherwise, display the wallet not enabled message.
-                    if (methods.masterpass === true) {
-                        masterpassBtn.style.display = 'inline-block';
-                        masterpassLabel.style.display = 'none';
-                    }
-                },
-
-                /*
-                * callback function: createPaymentRequest
-                * Triggered when: a digital wallet payment button is clicked.
-                */
-                createPaymentRequest: function () {
-
-                    var paymentRequestJson = {
-                        requestShippingAddress: true,
-                        currencyCode: "USD",
-                        countryCode: "US",
-                        total: {
-                            label: "MERCHANT NAME",
-                            amount: "10.00",
-                            pending: false
-                        }
-                    };
-                    return paymentRequestJson ;
-                },
-
-                /*
-                * callback function: cardNonceResponseReceived
-                * Triggered when: SqPaymentForm completes a card nonce request
-                */
-                cardNonceResponseReceived: function(errors, nonce, cardData) {
-                    if (errors) {
-                        // Log errors from nonce generation to the Javascript console
-                        console.log("Encountered errors:");
-                        errors.forEach(function(error) {
-                            console.log('  ' + error.message);
-                        });
-
-                        return;
-                    }
-
-                    alert('Nonce received: ' + nonce); /* FOR TESTING ONLY */
-
-                    // Assign the nonce value to the hidden form field
-                    document.getElementById('card-nonce').value = nonce;
-
-                    // POST the nonce form to the payment processing page
-                    document.getElementById('nonce-form').submit();
-
-                },
-
-                /*
-                * callback function: unsupportedBrowserDetected
-                * Triggered when: the page loads and an unsupported browser is detected
-                */
-                unsupportedBrowserDetected: function() {
-                    /* PROVIDE FEEDBACK TO SITE VISITORS */
-                },
-
-                /*
-                * callback function: inputEventReceived
-                * Triggered when: visitors interact with SqPaymentForm iframe elements.
-                */
-                inputEventReceived: function(inputEvent) {
-                    switch (inputEvent.eventType) {
-                        case 'focusClassAdded':
-                            /* HANDLE AS DESIRED */
-                            break;
-                        case 'focusClassRemoved':
-                            /* HANDLE AS DESIRED */
-                            break;
-                        case 'errorClassAdded':
-                            /* HANDLE AS DESIRED */
-                            break;
-                        case 'errorClassRemoved':
-                            /* HANDLE AS DESIRED */
-                            break;
-                        case 'cardBrandChanged':
-                            /* HANDLE AS DESIRED */
-                            break;
-                        case 'postalCodeChanged':
-                            /* HANDLE AS DESIRED */
-                            break;
-                    }
-                },
-
-                /*
-                * callback function: paymentFormLoaded
-                * Triggered when: SqPaymentForm is fully loaded
-                */
-                paymentFormLoaded: function() {
-                    /* HANDLE AS DESIRED */
-                }
-            }
-        });
-    </script>
-
-    <style type="text/css">
-        /* Define how SqPaymentForm iframes should look */
-        .sq-input {
-            border: 1px solid rgb(223, 223, 223);
-            outline-offset: -2px;
-            margin-bottom: 5px;
-            display: inline-block;
-        }
-
-        /* Define how SqPaymentForm iframes should look when they have focus */
-        .sq-input--focus {
-            outline: 5px auto rgb(59, 153, 252);
-        }
-
-        /* Define how SqPaymentForm iframes should look when they contain invalid values */
-        .sq-input--error {
-            outline: 5px auto rgb(255, 97, 97);
-        }
-
-        /* Customize the "Pay with Credit Card" button */
-        .button-credit-card {
-            min-width: 200px;
-            min-height: 20px;
-            padding: 0;
-            margin: 5px;
-            line-height: 20px;
-            box-shadow: 2px 2px 1px rgb(200, 200, 200);
-            background: rgb(255, 255, 255);
-            border-radius: 5px;
-            border: 1px solid rgb(200, 200, 200);
-            font-weight: bold;
-            cursor:pointer;
-        }
-
-
-        /* Customize the "{{Wallet}} not enabled" message */
-        .wallet-not-enabled {
-            min-width: 200px;
-            min-height: 40px;
-            max-height: 64px;
-            padding: 0;
-            margin: 10px;
-            line-height: 40px;
-            background: #eee;
-            border-radius: 5px;
-            font-weight: lighter;
-            font-style: italic;
-            font-family: inherit;
-            display: block;
-        }
-
-        /* Customize the Apple Pay on the Web button */
-        .button-apple-pay {
-            min-width: 200px;
-            min-height: 40px;
-            max-height: 64px;
-            padding: 0;
-            margin: 10px;
-            background-image: -webkit-named-image(apple-pay-logo-white);
-            background-color: black;
-            background-size: 100% 60%;
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-            border-radius: 5px;
-            cursor:pointer;
-            display: none;
-        }
-
-        /* Customize the Masterpass button */
-        .button-masterpass {
-            min-width: 200px;
-            min-height: 40px;
-            max-height: 40px;
-            padding: 0;
-            margin: 10px;
-            background-image: url(https://static.masterpass.com/dyn/img/btn/global/mp_chk_btn_147x034px.svg);
-            background-color: black;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-            border-radius: 5px;
-            border-color: rgb(255, 255, 255);
-            cursor:pointer;
-            display: none;
-        }
-
-        #sq-walletbox {
-            float:left;
-            margin:5px;
-            padding:10px;
-            text-align: center;
-            vertical-align: top;
-            font-weight: bold;
-        }
-
-        #sq-ccbox {
-            float:left;
-            margin:5px;
-            padding:10px;
-            text-align: center;
-            vertical-align: top;
-            font-weight: bold;
-        }
-    </style>
 </head>
 
 <!-- Page content -->
@@ -305,122 +442,257 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 </div>
-<!-- Page Content -->
-<div class="container s-masthead">
-    <h3 id="checkout text-center">Checkout</h3>
-
-    <!-- Review cart -->
+    <!-- Custom styles for this template -->
+<link href="../../public/stylesheets/form-validation.css" th:href="@{/stylesheets/form-validation.css}" rel="stylesheet" media="screen">
 
 
-    <div class="row mb-4">
-        <!-- Shipping -->
-        <div class="col-md-4 col-sm-6" >
-            <h5 class="text-white">Shipping Information</h5>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name"/>
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Address Line 1" aria-label="Address Line 1" aria-describedby="address1"/>
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Address Line 2" aria-label="Address Line 2" aria-describedby="address2"/>
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="city"/>
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="State" aria-label="State" aria-describedby="state"/>
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Zip Code" aria-label="Zip" aria-describedby="zip"/>
-            </div>
-            <br>
-        <!-- Payment -->
-            <h5 class="text-white">Payment Information</h5>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Credit Card" aria-label="Credit Card" aria-describedby="card-number"/>
-            </div>
-            <!--<br>-->
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="CVV" aria-label="CVV" aria-describedby="ccv"/>
-            </div>
-            <!--<br>-->
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Expiration Date" aria-label="Credit Card" aria-describedby="ccv"/>
-            </div>
-            <!--<br>-->
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Billing Zip Code" aria-label="Expiration Date" aria-describedby="expiration-date"/>
-            </div>
-            <div class="text-white">Pay with a Digital Wallet</div>
-            <!--<div id="sq-apple-pay-label" class="wallet-not-enabled">Apple Pay for Web not enabled</div>-->
-            <!-- Placeholder for Apple Pay for Web button -->
-            <div class="input-group mb-2">
-                <button type="button" class="btn">Apple Pay</button>
-            </div>
-            <!--<div id="sq-masterpass-label" class="wallet-not-enabled">Masterpass not enabled</div>-->
-            <!-- Placeholder for Masterpass button -->
-            <div class="input-group mb-2">
-                <button type="button" class="btn">Masterpass</button>
-            </div>
+<body class="bg-light">
+
+<div class="container">
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h2>Checkout form</h2>
+        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Second product</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$8</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Third item</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>EXAMPLECODE</small>
+                    </div>
+                    <span class="text-success">-$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>$20</strong>
+                </li>
+            </ul>
+
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Promo code">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                    </div>
+                </div>
+            </form>
         </div>
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Billing address</h4>
+            <form class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Valid first name is required.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Valid last name is required.
+                        </div>
+                    </div>
+                </div>
 
+                <div class="mb-3">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" id="username" placeholder="Username" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Your username is required.
+                        </div>
+                    </div>
+                </div>
 
-        <div class="col-md-4 col-sm-6">
-            <h5 class="text-white">Order Details</h5>
-            <button class="btn">Place Order</button>
+                <div class="mb-3">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                    <div class="invalid-feedback">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                    <div class="invalid-feedback">
+                        Please enter your shipping address.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                    <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label for="country">Country</label>
+                        <select class="custom-select d-block w-100" id="country" required>
+                            <option value="">Choose...</option>
+                            <option>United States</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid country.
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="state">State</label>
+                        <select class="custom-select d-block w-100" id="state" required>
+                            <option value="">Choose...</option>
+                            <option>California</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="zip">Zip</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                        <div class="invalid-feedback">
+                            Zip code required.
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="same-address">
+                    <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="save-info">
+                    <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                </div>
+                <hr class="mb-4">
+
+                <h4 class="mb-3">Payment</h4>
+
+                <div class="d-block my-3">
+                    <div class="custom-control custom-radio">
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                        <label class="custom-control-label" for="credit">Credit card</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                        <label class="custom-control-label" for="debit">Debit card</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                        <label class="custom-control-label" for="paypal">Paypal</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-expiration">Expiration</label>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                        <div class="invalid-feedback">
+                            Expiration date required
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-expiration">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            </form>
         </div>
     </div>
 
-
-    <!--
-      You should replace the action attribute of the form with the path of
-      the URL you want to POST the nonce to (for example, "/process-card")
-    -->
-    <!--<form id="nonce-form" novalidate action="path/to/payment/processing/page" method="post">-->
-    <!--Pay with a Credit Card-->
-    <!--<table>-->
-    <!--<tbody>-->
-    <!--<tr>-->
-    <!--<td>Card Number:</td>-->
-    <!--<td><div id="sq-card-number"></div></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>CVV:</td>-->
-    <!--<td><div id="sq-cvv"></div></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>Expiration Date: </td>-->
-    <!--<td><div id="sq-expiration-date"></div></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>Postal Code:</td>-->
-    <!--<td><div id="sq-postal-code"></div></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--<button id="sq-creditcard" class="button-credit-card" onclick="requestCardNonce(event)">-->
-    <!--Pay with card-->
-    <!--</button>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-
-    <!--
-      After a nonce is generated it will be assigned to this hidden input field.
-    -->
-    <!--<input type="hidden" id="card-nonce" name="nonce">-->
-    <!--</form>-->
-
-
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2017-2018 Company Name</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
 </div>
 
-<!-- /.container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="../../../../assets/js/vendor/popper.min.js"></script>
+<script src="../../../../dist/js/bootstrap.min.js"></script>
+<script src="../../../../assets/js/vendor/holder.min.js"></script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
 
-<!-- Footer -->
-<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
 
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 </body>
-
 </html>

@@ -46,7 +46,11 @@ public class ProductController {
 
         // List
         mav.addObject("related", 0);
-        System.out.println(product);
+
+
+        String view = "home";
+        mav.addObject("view", view );
+
         return mav;
     }
 }

@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="en" xmlns:th="http://www.thymeleaf.org">
-        <head>
-            <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
-        </head>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
 
+<!-- Page content -->
 <body>
 
 <!-- Navigation -->
@@ -16,8 +13,17 @@
 </div>
 
 
-<div class="container">
-
+<div id="contact" class="container">
+    <h2>Get in Touch</h2>
+    <div id="contact-form">
+        <form method="POST" action="https://formspree.io/email@gmail.com">
+            <input type="hidden" name="_subject" value="Contact request from personal website" />
+            <input type="email" name="_replyto" placeholder="Your email" required>
+            <textarea name="message" placeholder="Your message" required></textarea>
+            <button>Send</button>
+        </form>
+    </div>
+    <!-- End #contact-form -->
 </div>
 
 <!-- Footer -->
@@ -25,9 +31,4 @@
 
 </body>
 
-</html></title>
-</head>
-<body>
-
-</body>
 </html>

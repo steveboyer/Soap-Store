@@ -42,16 +42,7 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        CatalogHolder holder = new CatalogHolder();
         SpringApplication.run(Main.class, args);
-    }
-
-    @RequestMapping("/about")
-    String about(Model model){
-        return "about";
-    }
-
-    @RequestMapping("/contact")
-    String contact(Model model){
-        return "contact";
     }
 }

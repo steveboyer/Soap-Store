@@ -30,6 +30,8 @@ public class CheckoutController {
         ModelAndView mav = new ModelAndView("checkout");
         mav.addObject("catalog", CatalogHolder.getCatalog());
         //mav.addObject("")
+        String view = "cart";
+        mav.addObject("view", view );
 
         return mav;
     }

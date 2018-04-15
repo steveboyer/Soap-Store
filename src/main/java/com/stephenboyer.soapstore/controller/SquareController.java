@@ -38,8 +38,13 @@ public class SquareController {
 
         String responseId = squareConnector.charge(nonceForm);
 
+
+
+
         model.put("transactionId", responseId);
 
-        return "charge";
+        String view = "cart";
+        model.put("view", view );
+        return view;
     }
 }

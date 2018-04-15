@@ -48,6 +48,31 @@ public class IndexController {
 
         logger.info("catalog added");
 
+        String view = "home";
+        mav.addObject("view", view );
+
         return mav;
     }
+
+    @RequestMapping(value = "/contact")
+    public ModelAndView contact(){
+        ModelAndView mav = new ModelAndView("contact");
+
+        mav.addObject("catalog", CatalogHolder.getCatalog());
+
+
+        String view = "contact";
+        mav.addObject("view", view);
+        return mav;
+    }
+
+    @RequestMapping(value = "/about")
+    public ModelAndView about(){
+        ModelAndView mav = new ModelAndView("about");
+
+        String view = "about";
+        mav.addObject("view", view);
+        return mav;
+    }
+
 }
