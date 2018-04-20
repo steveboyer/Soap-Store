@@ -3,18 +3,18 @@ package com.stephenboyer.soapstore.domain;
 import com.stephenboyer.soapstore.util.Strings;
 
 public class Category {
-//    @Id
+
     public String id;
 
     private String name;
     private String url;
     private String categoryId;
 
-    public Category(String name, String id) {
+    public Category(String name, String cid) {
         this.name = name;
-        this.id = id;
+        this.id = name.toLowerCase().replace(" ", "-");
         this.url = "/store/category/" + id;
-        this.categoryId = id;
+        this.categoryId = cid;
     }
 
     public String getName() {
@@ -37,8 +37,16 @@ public class Category {
         return url;
     }
 
-    public void setURL(String url) {
+    public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override

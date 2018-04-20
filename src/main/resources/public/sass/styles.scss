@@ -13,15 +13,9 @@
         1. Variables
         2. Mixins
         3. Global Styles
-        4. Lead Styles
-        5. About Styles
-        6. Experience Styles
-        7. Education Styles
-        8. Project Styles
-        9. Skills Styles
-        10. Contact Styles
-        11. Optional Section Styles
-        12. Media Queries
+        4. Contact Styles
+        5. Optional Section Styles
+        6. Media Queries
 */
 
 /*
@@ -41,39 +35,33 @@ $morning-glory: #9ACCCC;
 $text-color: lighten($morning-glory,10%);
 $input-background: white;
 
-// $text
-// $text-hover
-// $link-background
-// $link-background-hover
-
 /*
     ---------------------
     ----- 2. Mixins -----
     ---------------------
 */
-
 @mixin transition($duration: 0.5s, $func: ease, $property: all) {
-    transition: #{$duration} #{$func} #{$property};
+  transition: #{$duration} #{$func} #{$property};
 }
 
 @mixin placeholder {
-    &::-webkit-input-placeholder {
-        @content;
-    }
+  &::-webkit-input-placeholder {
+    @content;
+  }
 
-    &:-moz-placeholder {
-        @content;
-        opacity: 1;
-    }
+  &:-moz-placeholder {
+    @content;
+    opacity: 1;
+  }
 
-    &::-moz-placeholder {
-        @content;
-        opacity: 1;
-    }
+  &::-moz-placeholder {
+    @content;
+    opacity: 1;
+  }
 
-    &:-ms-input-placeholder {
-        @content;
-    }
+  &:-ms-input-placeholder {
+    @content;
+  }
 }
 
 /*
@@ -81,30 +69,29 @@ $input-background: white;
     ----- 3. Global Styles -----
     ----------------------------
 */
-
 body {
-    font-family: 'Linux Biolinum O', Arial, sans-serif;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 16px;
+  font-family: 'Linux Biolinum O', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
 
-    &.active {
-        overflow: hidden;
-        z-index: -1;
-    }
+  &.active {
+    overflow: hidden;
+    z-index: -1;
+  }
 
-    background: linear-gradient(65deg, $base-color, darken($base-color, 5%));
+  background: linear-gradient(65deg, $base-color, darken($base-color, 5%));
 }
 
-h2 {
-  color: white;
+h2, h3, h4, p {
+  color: $text-color;
 }
 
 @media (min-width: 992px) {
 
-    body {
-        padding-top: 56px;
-    }
+  body {
+    padding-top: 56px;
+  }
 }
 
 #logo {
@@ -140,19 +127,15 @@ h2 {
 
 
 nav {
-  background-color: darken($base-color, 3%);
+  background-color: lighten($base-color, 5%);
+
   a {
     color: $text-color;
   }
 }
 
-.navbar-brand {
-  display: inline-block;
-  margin-left: 35px;
-}
-
-footer {
-  background-color: darken($base-color, 3%);
+.navitem.active a {
+  background-color: lighten($base-color, 5%);
 }
 
 ul {
@@ -169,67 +152,68 @@ ul {
   margin-top: 60px;
 }
 
- .category-list-item, .cart_button {
-   background-color: $category-background;
-   color: $text-color;
-   border: 1px solid #9bcccc;
-   display:inline-block;
-   font-family: 'Linux Biolinum O', Arial, sans-serif;
-   font-weight: normal;
-   font-style: normal;
-   text-decoration:none;
-   width:100%;
-   padding: 8px 16px;
-   text-align: center;
-   font-size: 16px;
-   margin: 4px 2px;
-   border-radius: calc(.25rem - 1px);
-   -webkit-transition-duration: 0.2s; /* Safari */
-   transition-duration: 0.2s;
-   cursor: pointer;
+.category-list-item, .cart_button {
+  background-color: $category-background;
+  color: $text-color;
+  border: 1px solid #9bcccc;
+  display:inline-block;
+  font-family: 'Linux Biolinum O', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:none;
+  width:100%;
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: calc(.25rem - 1px);
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-duration: 0.2s;
+  cursor: pointer;
 
-   &:hover {
-     background-color: #9bcccc;
-     color: black;
-     text-decoration:none;
-   }
+  &:hover {
+    background-color: #9bcccc;
+    color: black;
+    text-decoration:none;
+  }
 
-   &:active{
-     position: relative;
-     top: 1px;
-   }
- }
+  &:active{
+    background-color: $downy;
+  }
+}
 
- .category {
-   &:hover {
-     text-decoration: none;
+.category {
+  &:hover {
+    text-decoration: none;
 
-     a {
-       text-decoration: none;
-       color: black;
-     }
+    a {
+      text-decoration: none;
+      color: black;
+    }
 
-     background-color: #9bcccc;
-     color: black;
-   }
+    background-color: #9bcccc;
+    color: black;
+  }
 
- }
+}
 
- .dropdown-item {
-   background-color: $category-background;
-   color: $text-color;
-   border: 1px solid #9bcccc;
+.dropdown-item {
+  background-color: $category-background;
+  color: $text-color;
+  border: 1px solid #9bcccc;
 
-   &:hover {
-     background-color: #9bcccc;
-     color: black;
-   }
- }
+  &:hover {
+    background-color: #9bcccc;
+    color: black;
+  }
+}
 
 .navbar-brand {
   font-family: 'Kaushan Script', Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
+  display: inline-block;
+  //margin-left: 35px;
 }
 
 .form-group > label {
@@ -271,7 +255,7 @@ ul {
 
 /*
     -------------------------------
-    ----- 10. Contact Styles -----
+    ----- 4. Contact Styles -----
     -------------------------------
 */
 
@@ -337,6 +321,118 @@ ul {
   }
 }
 
+/*
+    -------------------------------
+    ----- 5. Checkout Styles -----
+    -------------------------------
+*/
+
+#checkout {
+  h3 {
+    color: $text-color;
+  }
+
+  h4 {
+    color: $text-color;
+  }
+
+  p {
+    color: $text-color;
+  }
+
+  label {
+    color:$text-color;
+  }
+}
+
+//footer:after {
+//  content:' ';
+//  position: relative;
+//  display:block;
+//  width: 40px;
+//  margin: 0 2%;
+//  border:0.5px solid #9bcccc;
+//  border-radius:0;
+//  -webkit-border-radius:1px;
+//  -moz-border-radius:1px;
+//  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+//  -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+//  -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+//  left: 48%;
+//  transform: translateX(-50%);
+//}
+
+#sq-ccbox {
+  float:left;
+  margin:5px;
+  padding:10px;
+  text-align: center;
+  vertical-align: top;
+  font-family: 'Linux Biolinum O', Arial, serif;
+  font-weight: normal;
+
+}
+
+#digital_wallet {
+  color: white;
+  font-family: 'Linux Biolinum O', Arial, serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+#sq-card-number {
+  text-align: center;
+}
+
+#sq-cvv {
+  text-align: center;
+}
+
+#sq-expiration-date {
+  text-align: center;
+}
+
+#sq-postal-code {
+  text-align: center;
+}
+
+#sq-creditcard {
+  text-align: center;
+}
+
+.footer-header {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.footer-header:after {
+  content:' ';
+  position: relative;
+  display:block;
+  width: 40px;
+  margin: 0 2%;
+  border:0.5px solid #9bcccc;
+  border-radius:0;
+  -webkit-border-radius:1px;
+  -moz-border-radius:1px;
+  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+  -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+  -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+  left: 48%;
+  transform: translateX(-50%);
+}
+
+.s-masthead {
+  display: block;
+  position: relative;
+  padding: 3rem 15px;
+}
+
+@media (min-width: 576px) {
+  .s-masthead {
+    padding: 30px 40px 30px 40px;
+  }
+}
 
 ///* Customize the "{{Wallet}} not enabled" message */
 //.wallet-not-enabled {
@@ -407,93 +503,3 @@ ul {
 //  font-weight: normal;
 //  font-style: normal;
 //}
-
-#sq-ccbox {
-  float:left;
-  margin:5px;
-  padding:10px;
-  text-align: center;
-  vertical-align: top;
-  font-family: 'Linux Biolinum O', Arial, serif;
-  font-weight: normal;
-
-}
-
-#digital_wallet {
-  color: white;
-  font-family: 'Linux Biolinum O', Arial, serif;
-  font-weight: normal;
-  font-style: normal;
-}
-
-#sq-card-number {
-  text-align: center;
-}
-
-#sq-cvv {
-  text-align: center;
-}
-
-#sq-expiration-date {
-  text-align: center;
-}
-
-#sq-postal-code {
-  text-align: center;
-}
-
-#sq-creditcard {
-  text-align: center;
-}
-
-.footer-header {
-  font-size: 18px;
-  margin-bottom: 0;
-}
-
-.footer-header:after {
-  content:' ';
-  position: relative;
-  display:block;
-  width: 40px;
-  margin: 0 2%;
-  border:0.5px solid #9bcccc;
-  border-radius:0;
-  -webkit-border-radius:1px;
-  -moz-border-radius:1px;
-  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-  -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-  -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-  left: 48%;
-  transform: translateX(-50%);
-}
-
-#checkout:after {
-  content:' ';
-  position: relative;
-  display:block;
-  width: 40px;
-  margin: 0 2%;
-  border:0.5px solid #9bcccc;
-  border-radius:0px;
-  -webkit-border-radius:1px;
-  -moz-border-radius:1px;
-  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-  -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-  -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-  left: 48%;
-  transform: translateX(-50%);
-}
-
-.s-masthead {
-    display: block;
-    position: relative;
-    padding: 3rem 15px;
-}
-
-@media (min-width: 576px) {
-  .s-masthead {
-    padding: 30px 40px 30px 40px;
-
-  }
-}

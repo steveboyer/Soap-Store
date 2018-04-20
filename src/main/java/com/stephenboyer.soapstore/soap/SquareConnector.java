@@ -25,20 +25,16 @@ package com.stephenboyer.soapstore.soap;
 import com.squareup.connect.ApiClient;
 import com.squareup.connect.ApiException;
 import com.squareup.connect.Configuration;
-import com.squareup.connect.api.CatalogApi;
-import com.squareup.connect.api.LocationsApi;
-import com.squareup.connect.api.TransactionsApi;
-import com.squareup.connect.api.V1ItemsApi;
+import com.squareup.connect.api.*;
 import com.squareup.connect.auth.OAuth;
 import com.squareup.connect.models.*;
-import com.stephenboyer.soapstore.domain.Category;
-import com.stephenboyer.soapstore.domain.NonceForm;
-import com.stephenboyer.soapstore.domain.Product;
-import com.stephenboyer.soapstore.domain.ProductVariation;
+import com.squareup.connect.models.Address;
+import com.stephenboyer.soapstore.controller.IndexController;
+import com.stephenboyer.soapstore.domain.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 public class SquareConnector {
@@ -56,6 +52,7 @@ public class SquareConnector {
 
     private static ApiClient squareClient;
     private Location squareLocation;
+    private static final Logger logger = LoggerFactory.getLogger(SquareConnector.class.getSimpleName());
 
     public ApiClient getSquareClient() {
 
@@ -90,27 +87,94 @@ public class SquareConnector {
 
     }
 
+    public List<Category> getCategories(){
+        try {
+            V1ItemsApi v1ItemsApi = new V1ItemsApi();
 
-    public String charge(NonceForm nonceForm) throws ApiException {
-        // To learn more about splitting transactions with additional recipients,
-        // see the Transactions API documentation on our [developer site]
-        // (https://docs.connect.squareup.com/payments/transactions/overview#mpt-overview).
-        ChargeRequest chargeRequest = new ChargeRequest()
-                .idempotencyKey(UUID.randomUUID().toString())
-                .amountMoney(new Money().amount(1_00L).currency(Money.CurrencyEnum.USD))
-                .cardNonce(nonceForm.getNonce())
-                .note("From a Square sample Java app");
+            getSquareLocation();
 
-        TransactionsApi transactionsApi = new TransactionsApi();
-        transactionsApi.setApiClient(squareClient);
+            String locationId = squareLocation.getId();
 
-        ChargeResponse response = transactionsApi.charge(squareLocation.getId(), chargeRequest);
+            List<V1Category> result = v1ItemsApi.listCategories(locationId);
+            List<Category> categories = new ArrayList<>();
 
-         return response.getTransaction().getId();
+            result.forEach(r -> categories.add(new Category(r.getName(), r.getId())));
 
-
+            return categories;
+        } catch (ApiException | NullPointerException ex){
+            System.err.println("Could not get categories.");
+            return null;
+        }
     }
 
+    public void checkout(){
+
+        CheckoutApi api = new CheckoutApi();
+
+
+        ArrayList<CreateOrderRequestLineItem> lineItems = new ArrayList<>();
+
+        lineItems.add( new CreateOrderRequestLineItem()
+                .name("Printed T Shirt")
+                .quantity("2")
+                .basePriceMoney(new Money()
+                        .amount(1500L)
+                        .currency(Money.CurrencyEnum.USD))
+                .addDiscountsItem(new CreateOrderRequestDiscount()
+                        .name("7% off previous season item")
+                        .percentage("7")
+                )
+                .addDiscountsItem(new CreateOrderRequestDiscount()
+                        .name("$3 off Customer Discount")
+                        .amountMoney(new Money()
+                                .amount(300L)
+                                .currency(Money.CurrencyEnum.USD))
+                ));
+
+        lineItems.add(new CreateOrderRequestLineItem()
+                .name("Slim Jeans")
+                .quantity("1")
+                .basePriceMoney(new Money()
+                        .amount(2500L)
+                        .currency(Money.CurrencyEnum.USD))
+        );
+
+        Address address = new Address()
+                .addressLine1("1455 Market St.")
+                .addressLine2("Suite 600")
+                .locality("San Francisco")
+                .administrativeDistrictLevel1("CA")
+                .postalCode("94103")
+                .country(Address.CountryEnum.US);
+
+
+        try {
+            CreateCheckoutResponse response = api.createCheckout(getSquareLocation().getId(), new CreateCheckoutRequest()
+                    .idempotencyKey(UUID.randomUUID().toString())
+                    .order(new CreateOrderRequest()
+                            .referenceId("reference_id")
+                            .lineItems(lineItems)
+                            .discounts(Arrays.asList(new CreateOrderRequestDiscount().name("Father's day 12% OFF").percentage("12"),
+                                    new CreateOrderRequestDiscount()
+                                            .name("Global Sales $55 OFF")
+                                            .amountMoney(new Money().amount(5500L).currency(Money.CurrencyEnum.USD))))
+                            .addTaxesItem(new CreateOrderRequestTax().name("Sales Tax").percentage("8.5")
+                            )
+                    )
+                    .askForShippingAddress(true)
+                    .merchantSupportEmail("merchant+support@website.com")
+                    .prePopulateBuyerEmail("example@email.com")
+                    .prePopulateShippingAddress(address)
+                    .redirectUrl("https://merchant.website.com/order-confirm"));
+
+            Checkout checkout = response.getCheckout();
+
+            checkout.getOrder().getLineItems().stream().forEach(p -> logger.info(p.getName() + " " + p.getBasePriceMoney().getAmount()));
+        } catch (ApiException ex){
+            logger.error(ex.getMessage());
+        }
+
+    }
 
     public Product getProduct(String id){
         return new Product(getCatalogObject(id));
@@ -133,7 +197,7 @@ public class SquareConnector {
 
     // Get the first [number] of products in the square catalog
     // number: number of products to return;
-    public List<CatalogObject> getSquareCatalog(int limit) {
+    private List<CatalogObject> getSquareCatalog(int limit) {
 
         CatalogApi api = new CatalogApi();
         api.setApiClient(getSquareClient());
@@ -169,59 +233,15 @@ public class SquareConnector {
         return objects;
     }
 
-    // Map product to category by id
-    public Product mapProduct(List<Category> categories, Product product){
-
-        // Iterate through and set category for each product
-        for(Category cat : categories){
-            if(product.getCategoryId() == null) continue;
-            if(cat == null) continue;
-
-            if(product.getCategoryId().equals(cat.getId())){
-                product.setCategory(cat);
-                break;
-            }
-        }
-
-        return product;
-    }
-
     // Retrieve entire catalog
     public List<Product> getProducts(){
         List<Product> products = new ArrayList<>();
-        List<Category> categories = getCategories();
 
-        // Get catalog, create product, map category to product, add to list
-        getSquareCatalog(0).forEach(p -> products.add(mapProduct(categories, new Product(p))));
-//        products.stream().forEach(p -> System.out.println(p));
-        System.out.println();
-//        products.forEach(p -> p.getProductVariations().forEach(q -> System.out.println( q.getSku())));
-
-        for(Product product : products){
-            System.out.println();
-            for(ProductVariation variation : product.getProductVariations()){
-                System.out.println(variation.getSku());
-            }
-        }
+        // Add CatalogObjects as Products to List
+        // Null check
+        Objects.requireNonNull(getSquareCatalog(0)).forEach(p -> products.add(new Product(p)));
 
         return products;
-    }
-
-    // Get p products from catalog (category not set)
-    public List<Product> getProducts(int number){
-        List<Product> products = new ArrayList<>();
-        getSquareCatalog(number).forEach(p -> products.add(new Product(p)));
-//        products.stream().forEach(p -> System.out.println(p));
-
-        for(Product product : products){
-            System.out.println();
-            for(ProductVariation variation : product.getProductVariations()){
-                System.out.println(variation.getSku());
-            }
-        }
-
-        return products;
-
     }
 
     public static String loadEnvironmentVariable(String name) {
@@ -233,36 +253,6 @@ public class SquareConnector {
 
         return value;
     }
-
-//    @RequestMapping("/square")
-//    String index(Map<String, Object> model) throws ApiException {
-//        model.put("locationId", squareLocation.getId());
-//        model.put("locationName", squareLocation.getName());
-//        model.put("addId", squareAppId);
-//
-//        return "index";
-//    }
-//
-//    @PostMapping("/square/charge")
-//    String charge(@ModelAttribute NonceForm form, Map<String, Object> model) throws ApiException {
-//        // To learn more about splitting transactions with additional recipients,
-//        // see the Transactions API documentation on our [developer site]
-//        // (https://docs.connect.squareup.com/payments/transactions/overview#mpt-overview).
-//        ChargeRequest chargeRequest = new ChargeRequest()
-//                .idempotencyKey(UUID.randomUUID().toString())
-//                .amountMoney(new Money().amount(1_00L).currency(CurrencyEnum.USD))
-//                .cardNonce(form.getNonce())
-//                .note("From a SquareConnector sample Java app");
-//
-//        TransactionsApi transactionsApi = new TransactionsApi();
-//        transactionsApi.setApiClient(squareClient);
-//
-//        ChargeResponse response = transactionsApi.charge(squareLocation.getId(), chargeRequest);
-//
-//        model.put("transactionId", response.getTransaction().getId());
-//
-//        return "charge";
-//    }
 
     public Location lookupCardProcessingLocation() throws ApiException {
         LocationsApi locationsApi = new LocationsApi();
@@ -283,61 +273,23 @@ public class SquareConnector {
         }
     }
 
-    public List<Category> getCategories(){
-        try {
-            V1ItemsApi v1ItemsApi = new V1ItemsApi();
+    public String charge(NonceForm nonceForm) throws ApiException {
+        // To learn more about splitting transactions with additional recipients,
+        // see the Transactions API documentation on our [developer site]
+        // (https://docs.connect.squareup.com/payments/transactions/overview#mpt-overview).
+        ChargeRequest chargeRequest = new ChargeRequest()
+                .idempotencyKey(UUID.randomUUID().toString())
+                .amountMoney(new Money().amount(1_00L).currency(Money.CurrencyEnum.USD))
+                .cardNonce(nonceForm.getNonce())
+                .note("From a Square sample Java app");
 
-            getSquareLocation();
+        TransactionsApi transactionsApi = new TransactionsApi();
+        transactionsApi.setApiClient(squareClient);
 
-            String locationId = squareLocation.getId();
+        ChargeResponse response = transactionsApi.charge(squareLocation.getId(), chargeRequest);
 
-            List<V1Category> result = v1ItemsApi.listCategories(locationId);
-            List<Category> categories = new ArrayList<>();
+        return response.getTransaction().getId();
 
-            result.forEach(r -> categories.add(new Category(r.getName(), r.getId())));
-
-            return categories;
-        } catch (ApiException | NullPointerException ex){
-            System.err.println("Could not get categories.");
-            return null;
-        }
-    }
-
-    public Category getCategory(String id){
-        for(Category category : getCategories()){
-            if(id.equals(category.getId())){
-                return category;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Get products matching @param category
-     * @param category
-     * @return
-     */
-    public List<Product> getProductsInCategory(Category category){
-        List<Product> products = new ArrayList<>();
-
-        List<Product> allProducts = getProducts();
-
-
-        for(Product product : allProducts){
-
-            if(product.getCategory() != null && product.getCategory().getName().equals(category.getName())){
-                products.add(product);
-            }
-        }
-
-        products.forEach(p -> System.out.println(p.getName()));
-
-        return products;
-
-
-        // Filter list to get products in category
-        //products = getProducts().stream().filter(p -> p.getCategory().getName().equals(category.getName())).collect(Collectors.toList());
 
     }
 }

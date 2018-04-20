@@ -31,7 +31,7 @@ public class Product {
     private List<String> variationLgSmVals = new ArrayList<>();
 
 
-    private String URL;
+    private String url;
 //    private static AtomicLong idCounter = new AtomicLong(1001);
 
     private Product(){ }
@@ -61,7 +61,7 @@ public class Product {
 
         // Product's URL, '/store/item/93HM93JE...'
         //ex. laramiesoapco.com/store/item/93HM93JE...
-        URL =  ("/store/item/") + productId;
+        url =  ("/store/item/") + productId;
 
 
         try {
@@ -192,12 +192,12 @@ public class Product {
         this.productVariations = productVariations;
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Category getCategory() {

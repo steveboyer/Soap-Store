@@ -20,22 +20,18 @@
 <!-- Navigation -->
 <div th:fragment="header">
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container" id="js_warning">
-
-    </div>
-    <div class="container">
-        <a class="navbar-brand animation-element" href="/"><img src="" th:src="@{/images/LSC-Banner-RGB.png}"/></a>
+        <a class="navbar-brand" href="/"><img src="" th:src="@{/images/LSC-Banner-RGB.png}"/></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li th:class="'nav-item ' + ((${view} == 'home')? 'active' : '')">
+                <li th:class="'nav-item ' + ((${view} == 'home')? ' active' : '')">
                     <a class="nav-link" href="/">
                         Home
                     </a>
                 </li>
-                <li th:class="'nav-item dropdown' + ${view == 'categories' ? 'active' : ''}">
+                <li th:class="'nav-item dropdown' + ${view == 'categories' ? ' active' : ''}">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categories
                     </a>
@@ -45,24 +41,23 @@
                         </div>
                     </div>
                 </li>
-                <li th:class="'nav-item ml-2' + ${view == 'cart' ? 'active' : ''}">
+                <li th:class="'nav-item ml-2' + ${view == 'cart' ? ' active' : ''}">
                     <a class="btn btn-secondary" role="button" aria-haspopup="true" aria-expanded="false" href="/cart">
                         Cart
                     </a>
                 </li>
-                <li th:class="'nav-item ml-2' + ${view == 'about' ? 'active' : ''}">
+                <li th:class="'nav-item ml-2' + ${view == 'about' ? ' active' : ''}">
                     <a class="btn btn-secondary" role="button" aria-haspopup="true" aria-expanded="false" href="/about">
                         About
                     </a>
                 </li>
-                <li th:class="'nav-item ml-2' + ${view == 'contact' ? 'active' : ''}">
+                <li th:class="'nav-item ml-2' + ${view == 'contact' ? ' active' : ''}">
                     <a class="btn btn-secondary" role="button" aria-haspopup="true" aria-expanded="false" href="/contact">
                         Contact
                     </a>
                 </li>
             </ul>
         </div>
-    </div>
 </nav>
 </div>
 </body>

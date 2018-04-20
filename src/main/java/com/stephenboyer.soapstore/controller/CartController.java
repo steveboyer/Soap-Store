@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
-import com.stephenboyer.soapstore.CatalogHolder;
+import com.stephenboyer.soapstore.CatalogFactory;
 import com.stephenboyer.soapstore.domain.Cart;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.domain.ProductVariation;
@@ -15,12 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 
 import java.util.HashMap;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@RequestMapping(value = "/cart")
 public class CartController {
 
     private final Logger log = LoggerFactory.getLogger(CartController.class.getSimpleName());
@@ -34,8 +32,9 @@ public class CartController {
         ModelAndView mav = new ModelAndView("cart");
 
         String view = "cart";
+        log.info("Hit /cart");
         mav.addObject("view", view );
-        mav.addObject("catalog", CatalogHolder.getCatalog());
+        mav.addObject("catalog", CatalogFactory.getCatalog());
         return mav;
     }
 
@@ -69,16 +68,13 @@ public class CartController {
 
             // Add item to cart
             // Have to find correct ProductVariation
-//            cart.addItem(CatalogHolder.findProductVariantBySKU(product, sku), quantity);
+//            cart.addItem(CatalogFactory.findProductVariantBySKU(product, sku), quantity);
 //            addItem();
 //        System.out.println("s:" + subtotal);//
             mav.addObject("quantity", quantity);
             mav.addObject("product", product);
             mav.addObject("subtotal", 1.00);
-            mav.addObject("catalog", CatalogHolder.getCatalog());
-
-
-
+            mav.addObject("catalog", CatalogFactory.getCatalog());
 
             log.info(cart.toString());
 

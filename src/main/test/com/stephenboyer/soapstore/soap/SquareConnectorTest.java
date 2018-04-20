@@ -43,6 +43,11 @@ class SquareConnectorTest {
     }
 
     @Test
+    void getCheckout() {
+            squareConnector.checkout();
+    }
+
+    @Test
     void getProducts1() {
     }
 

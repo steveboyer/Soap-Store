@@ -1,6 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
-import com.stephenboyer.soapstore.CatalogHolder;
+import com.stephenboyer.soapstore.CatalogFactory;
 import com.stephenboyer.soapstore.domain.Category;
 import com.stephenboyer.soapstore.domain.Product;
 //import com.stephenboyer.soapstore.soap.SquareConnector;
@@ -16,20 +16,26 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class CategoryController {
+
     @RequestMapping(value = "/store/category/{categoryId}", method = GET)
     ModelAndView category(@PathVariable String categoryId){
 
         ModelAndView mav = new ModelAndView("category");
         SquareConnector sq = new SquareConnector();
 
-        Category current = sq.getCategory(categoryId);
-        List<Product> products = sq.getProductsInCategory(current);
+//        String current = CatalogFactory.getCatalog().getCategory(categoryName);
+        List<Product> products = CatalogFactory.getCatalog().getProductsInCategory(categoryId);
         List<Category> categories = sq.getCategories();
 
 //        mav.addObject("categories", categories);
-        mav.addObject("catalog", CatalogHolder.getCatalog());
+        mav.addObject("catalog", CatalogFactory.getCatalog());
         mav.addObject("products", products);
-        mav.addObject("category", current);
+        mav.addObject("category", categoryId);
+        mav.addObject("catname", CatalogFactory.getCatalog().getCategory(categoryId).getName());
+        // getCategoryById and send name
+
+
+//        mav.addObject("categories", categories);
 
         String view = "home";
         mav.addObject("view", view );

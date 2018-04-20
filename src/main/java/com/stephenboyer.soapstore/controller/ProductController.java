@@ -1,7 +1,6 @@
 package com.stephenboyer.soapstore.controller;
 
-import com.stephenboyer.soapstore.CatalogHolder;
-import com.stephenboyer.soapstore.domain.Category;
+import com.stephenboyer.soapstore.CatalogFactory;
 import com.stephenboyer.soapstore.domain.Product;
 import com.stephenboyer.soapstore.domain.ProductVariation;
 import com.stephenboyer.soapstore.soap.SquareConnector;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
@@ -33,7 +31,7 @@ public class ProductController {
 //        List<Category> categories = sq.getCategories(); // All categories
         Product product = sq.getProduct(id); // Product on this page
 
-        mav.addObject("catalog", CatalogHolder.getCatalog());
+        mav.addObject("catalog", CatalogFactory.getCatalog());
 //        mav.addObject("products", products);
 
         // Get product as defined in URL

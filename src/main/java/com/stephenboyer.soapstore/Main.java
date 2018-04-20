@@ -18,31 +18,62 @@ package com.stephenboyer.soapstore;
 
 //import com.zaxxer.hikari.HikariConfig;
 //import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import com.stephenboyer.soapstore.domain.Catalog;
+import com.stephenboyer.soapstore.domain.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Timer;
 
 @Controller
 @SpringBootApplication
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class.getSimpleName());
+
 
     public static void main(String[] args) throws Exception {
-        CatalogHolder holder = new CatalogHolder();
         SpringApplication.run(Main.class, args);
     }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void execute(){
+        logger.info("Startup Service started");
+
+        Catalog catalog = CatalogFactory.getCatalog();
+
+        List<Product> productList =  catalog.getProducts();
+        logger.info("# of Products: " +  productList.size());
+
+
+        logger.info("Started at " + Calendar.getInstance().getTime());
+
+        Thread t = new StatusTimer();
+        t.start();
+
+
+    }
+
+    class StatusTimer extends Thread {
+        @Override
+        public void run(){
+            while (true) {
+                logger.info("Time: " + Calendar.getInstance().getTime());
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 }
