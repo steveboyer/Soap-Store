@@ -2,12 +2,18 @@ package com.stephenboyer.soapstore.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.squareup.connect.models.OrderLineItem;
 import com.stephenboyer.soapstore.domain.Cart;
 import com.stephenboyer.soapstore.domain.CartItem;
+import com.stephenboyer.soapstore.domain.LineItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,31 +24,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
-// View-less requests
-// Rest API, called via AJAX
+@Scope("request")
 public class CartControllerRest {
-//    private final CartRepository repository;
 
-    @RequestMapping(value = "/store/item/add", method = POST,
-                    consumes = MediaType.APPLICATION_JSON_VALUE,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cart> addToCart(@RequestBody CartItem cartItem) throws IOException, JsonMappingException, JsonParseException {
-        System.out.println("Add to cart clicked");
+    private final Logger log = LoggerFactory.getLogger(CartControllerRest.class.getSimpleName());
 
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    private Cart cart;
 
+    @RequestMapping(value = "/cart/add", method = POST)
+    public ResponseEntity<LineItem> addToCart(@RequestBody(required = false) LineItem lineItem){
 
-//        try {
-//            // Look up cart for customer
-//            Cart cart = mongo.getCart(cartItem.getCartId());
-//
-//            System.out.println(cartItem.toString());
-//
-//            cart.addItem(cartItem);
-//
-//            return new ResponseEntity<>(cart, HttpStatus.OK);
-//        } catch (NullPointerException ex) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+        log.info(lineItem.toString());
+
+        return new ResponseEntity<LineItem>(lineItem, HttpStatus.OK);
+    }
+
+    @Autowired
+    public void setCart(Cart cart){
+        this.cart = cart;
     }
 }

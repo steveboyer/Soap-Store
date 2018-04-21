@@ -14,7 +14,7 @@ import java.util.List;
 //@Table(name = "cart")
 
 @Component
-@Scope(value="session", proxyMode= ScopedProxyMode.TARGET_CLASS)
+@Scope(value="session")
 public class Cart implements Serializable {
 //    @Id
 //    @GeneratedValue(strategy=GenerationType.AUTO)
