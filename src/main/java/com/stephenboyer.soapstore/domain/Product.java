@@ -56,7 +56,7 @@ public class Product {
         // Use image coming soon placeholder if image isn't present
         // @TODO improve
         if(catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty()){
-            imageUrl = "/images/image_coming_soon_2.png";
+            imageUrl = "/images/Image_coming_soon_2.png";
             imageComingSoon = true;
         } else {
             imageUrl = catalogItem.getImageUrl();
