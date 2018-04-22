@@ -24,6 +24,7 @@ public class Product {
     private String imageUrl;
     private String categoryId;
     private Category category;
+    private Boolean imageComingSoon = false;
     private List<ProductVariation> productVariations;
     private Boolean variationOz = false;
     private List<String> variationOzVals = new ArrayList<>();
@@ -54,7 +55,14 @@ public class Product {
 
         // Use image coming soon placeholder if image isn't present
         // @TODO improve
-        imageUrl = (catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty() ? "../../images/image_coming_soon_2.png" : catalogItem.getImageUrl());
+        if(catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty()){
+            imageUrl = "/images/image_coming_soon_2.png";
+            imageComingSoon = true;
+        } else {
+            imageUrl = catalogItem.getImageUrl();
+        }
+
+//        imageUrl = (catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty() ? "/images/image_coming_soon_2.png" : catalogItem.getImageUrl());
 
         // Category id
         categoryId = catalogItem.getCategoryId();
@@ -109,15 +117,6 @@ public class Product {
             variationLgSm = true;
             variationOzVals.add(sku.split("_")[2]);
         }
-
-
-
-
-
-
-//        if(sku.contains("large") || sku.contains("small"))
-
-
     }
 
     public Boolean getVariationOz() {
