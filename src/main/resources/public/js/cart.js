@@ -26,6 +26,7 @@ $(function(){
             },
             data: JSON.stringify(data)
         }).done(function(response){
+            console.log('response: ')
             console.log(response);
         });
 

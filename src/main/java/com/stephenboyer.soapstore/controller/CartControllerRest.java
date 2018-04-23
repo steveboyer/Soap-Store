@@ -32,11 +32,13 @@ public class CartControllerRest {
     private Cart cart;
 
     @RequestMapping(value = "/cart/add", method = POST)
-    public ResponseEntity<LineItem> addToCart(@RequestBody(required = false) LineItem lineItem){
+    public ResponseEntity<Cart> addToCart(@RequestBody(required = false) LineItem lineItem){
 
         log.info(lineItem.toString());
 
-        return new ResponseEntity<LineItem>(lineItem, HttpStatus.OK);
+//        cart.addItem();
+
+        return new ResponseEntity<Cart>(cart, HttpStatus.OK);
     }
 
     @Autowired

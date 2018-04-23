@@ -16,33 +16,39 @@
     <div class="row text-center text-white mb-4">
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-            </tr>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
             </thead>
-            <tbody>
-            <tr>
-            <tr>
-                <td>Soap lorem ipsum lorre</td>
-                <td>5</td>
-                <td>$5.55</td>
-                <td>$10.55</td>
-            </tr>
-            <tr>
-                <td>Soap</td>
-                <td>5</td>
-                <td>$5.55</td>
-                <td>$10.55</td>
-            </tr>
-            <tr>
-                <td>Soap</td>
-                <td>5</td>
-                <td>$5.55</td>
-                <td>$10.55</td>
-            </tr>
+            <tbody th:each="lineitem : ${cart.lineItems}">
+                <tr>
+                    <td th:text="${lineitem.productId}">Product Name</td>
+                    <td>Price</td>
+                    <td th:text="${lineitem.quantity}">Quantity</td>
+                    <td>Total for line</td>
+                </tr>
+
+                <!--<tr>-->
+                    <!--<td>Soap lorem ipsum lorre</td>-->
+                    <!--<td>5</td>-->
+                    <!--<td>$5.55</td>-->
+                    <!--<td>$10.55</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>Soap</td>-->
+                    <!--<td>5</td>-->
+                    <!--<td>$5.55</td>-->
+                    <!--<td>$10.55</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>Soap</td>-->
+                    <!--<td>5</td>-->
+                    <!--<td>$5.55</td>-->
+                    <!--<td>$10.55</td>-->
+                <!--</tr>-->
             </tbody>
         </table>
     </div>

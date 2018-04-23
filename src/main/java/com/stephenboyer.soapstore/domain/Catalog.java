@@ -1,7 +1,5 @@
 package com.stephenboyer.soapstore.domain;
 
-import com.stephenboyer.soapstore.controller.IndexController;
-import com.stephenboyer.soapstore.soap.SquareConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +11,7 @@ public class Catalog {
     private List<Product> products;
     private List<Category> categories;
     private HashMap<Category, ArrayList<Product>> mappedProducts;
-    private static final Logger logger = LoggerFactory.getLogger(Catalog.class.getSimpleName());
+    private static final transient Logger log = LoggerFactory.getLogger(Catalog.class.getSimpleName());
 
     public Catalog(List<Product> products, List<Category> categories){
         this.products = products;
@@ -76,6 +74,8 @@ public class Catalog {
      * @return
      */
     public List<Product> getProductsInCategory(String categoryId){
+        log.info("categoryId: " + categoryId);
+
         List<Product> products = new ArrayList<>();
 
         List<Product> allProducts = getProducts();

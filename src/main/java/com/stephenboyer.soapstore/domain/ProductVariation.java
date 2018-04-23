@@ -2,6 +2,8 @@ package com.stephenboyer.soapstore.domain;
 
 import com.squareup.connect.models.CatalogItemVariation;
 import com.stephenboyer.soapstore.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProductVariation  {
 //    @Id
@@ -17,13 +19,19 @@ public class ProductVariation  {
     private String name;
     private long price;
 
+    private final transient Logger log = LoggerFactory.getLogger(ProductVariation.class.getSimpleName());
+
 
     public ProductVariation(CatalogItemVariation variation){
         sku = variation.getSku();
         variationId = variation.getItemId();
         name = variation.getName();
         // @TODO fix NPE below
-        //price = variation.getPriceMoney().getAmount();
+        try {
+            price = variation.getPriceMoney().getAmount();
+        } catch (NullPointerException ex){
+            log.error("Product " + sku + ", " + variationId + " had no price data");
+        }
     }
 
     public String getId() {

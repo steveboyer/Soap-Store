@@ -2,13 +2,19 @@ package com.stephenboyer.soapstore.domain;
 
 import com.squareup.connect.models.CatalogItem;
 import com.squareup.connect.models.CatalogObject;
+import com.stephenboyer.soapstore.controller.CartControllerRest;
 import com.stephenboyer.soapstore.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Product {
+
+    private final transient Logger log = LoggerFactory.getLogger(Product.class.getSimpleName());
 
 //    @Id
     public String id;
@@ -30,7 +36,6 @@ public class Product {
     private List<String> variationOzVals = new ArrayList<>();
     private Boolean variationLgSm = false;
     private List<String> variationLgSmVals = new ArrayList<>();
-
 
     private String url;
 //    private static AtomicLong idCounter = new AtomicLong(1001);
@@ -77,6 +82,7 @@ public class Product {
         } catch (NullPointerException ex){
             ex.printStackTrace(); // TODO
         }
+
     }
 
     public List<String> getVariationOzVals() {
@@ -205,6 +211,14 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Boolean getImageComingSoon() {
+        return imageComingSoon;
+    }
+
+    public void setImageComingSoon(Boolean imageComingSoon) {
+        this.imageComingSoon = imageComingSoon;
     }
 
     @Override

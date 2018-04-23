@@ -41,6 +41,8 @@ public class CartController {
         log.info("Hit /cart");
         mav.addObject("view", view );
         mav.addObject("catalog", CatalogFactory.getCatalog());
+        mav.addObject("cart", cart);
+
         return mav;
     }
 
