@@ -8,7 +8,7 @@ $(function(){
         var scent = $("select#sel-scent").val();
         var size = $("select#sel-size").val();
         console.log(quantity + " " + scent + " " + size);
-        var productId = "KKJJEKD";
+        var productId = $("#product-id").val();
         var data = {
             "productId": productId,
             "quantity": quantity,
@@ -26,7 +26,7 @@ $(function(){
             },
             data: JSON.stringify(data)
         }).done(function(response){
-            console.log('response: ')
+            console.log('response: ');
             console.log(response);
         });
 

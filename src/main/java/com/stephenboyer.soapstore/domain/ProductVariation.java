@@ -19,8 +19,7 @@ public class ProductVariation  {
     private String name;
     private long price;
 
-    private final transient Logger log = LoggerFactory.getLogger(ProductVariation.class.getSimpleName());
-
+    private final Logger logger = LoggerFactory.getLogger(ProductVariation.class.getSimpleName());
 
     public ProductVariation(CatalogItemVariation variation){
         sku = variation.getSku();
@@ -30,7 +29,7 @@ public class ProductVariation  {
         try {
             price = variation.getPriceMoney().getAmount();
         } catch (NullPointerException ex){
-            log.error("Product " + sku + ", " + variationId + " had no price data");
+            logger.error("Product " + sku + ", " + variationId + " had no price data");
         }
     }
 

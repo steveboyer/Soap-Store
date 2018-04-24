@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Product {
 
-    private final transient Logger log = LoggerFactory.getLogger(Product.class.getSimpleName());
+    private final transient Logger logger = LoggerFactory.getLogger(Product.class.getSimpleName());
 
 //    @Id
     public String id;

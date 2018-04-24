@@ -10,8 +10,8 @@ import java.util.List;
 public class Catalog {
     private List<Product> products;
     private List<Category> categories;
-    private HashMap<Category, ArrayList<Product>> mappedProducts;
-    private static final transient Logger log = LoggerFactory.getLogger(Catalog.class.getSimpleName());
+    private HashMap<String, ArrayList<Product>> mappedProducts;
+    private static final Logger logger = LoggerFactory.getLogger(Catalog.class.getSimpleName());
 
     public Catalog(List<Product> products, List<Category> categories){
         this.products = products;
@@ -19,26 +19,24 @@ public class Catalog {
         mapProducts();
     }
 
-
     // Map products to category
     private void mapProducts(){
         mappedProducts = new HashMap<>();
 
         // Iterate through and set category for each product
         for (Category category : categories) {
-                ArrayList<Product> productsInCategory = new ArrayList<>();
-                 for(Product product : products) {
-                    if (product.getCategoryId() == null) continue;
-                    if (category == null) continue;
 
-                    if (product.getCategoryId().replace(" ", "-").toLowerCase().equals(category.getId())) {
+            ArrayList<Product> productsInCategory = new ArrayList<>();
+            for(Product product : products) {
+                if (product.getCategoryId() != null && category != null) {
+                    if (product.getCategoryId().equals(category.getCategoryId())) {
                         product.setCategory(category);
                         productsInCategory.add(product);
-                        break;
                     }
-
+                }
             }
-            mappedProducts.put(category, productsInCategory);
+
+            mappedProducts.put(category.getId(), productsInCategory);
         }
     }
 
@@ -74,21 +72,25 @@ public class Catalog {
      * @return
      */
     public List<Product> getProductsInCategory(String categoryId){
-        log.info("categoryId: " + categoryId);
+        logger.info("categoryId: " + categoryId);
 
-        List<Product> products = new ArrayList<>();
+//        List<Product> products = new ArrayList<>();
+//
+//        List<Product> allProducts = getProducts();
+//
+//
+//        for(Product product : allProducts){
+//            if(product.getCategory() != null) {
+//                logger.info("Product category: " + product.getCategory().getName().toLowerCase().replace(" ", "-"));
+//            } else {
+//                logger.info("Product: " + product.getName() + " had no category");
+//            }
+//            if(product.getCategory() != null && product.getCategory().getName().toLowerCase().replace(" ", "-").equals(categoryId)){
+//                products.add(product);
+//            }
+//        }
 
-        List<Product> allProducts = getProducts();
-
-
-        for(Product product : allProducts){
-
-            if(product.getCategory() != null && product.getCategory().getId().equals(categoryId)){
-                products.add(product);
-            }
-        }
-
-        return products;
+        return mappedProducts.get(categoryId);
     }
 
     public Product getProduct(String id){
@@ -100,9 +102,6 @@ public class Catalog {
         return null;
     }
 
-    public HashMap<Category, ArrayList<Product>> getMappedProducts(){
-        return mappedProducts;
-    }
 
 //    public ProductVariation findProductVariationBySku(String sku){
 //        for(Product product : products){
@@ -115,6 +114,6 @@ public class Catalog {
 //    }
 
 //    class
-        // Use comparator? No, use HashMap<>(). This will use more ram, but will be faster. HashMap should probably be used.
+    // Use comparator? No, use HashMap<>(). This will use more ram, but will be faster. HashMap should probably be used.
 
 }

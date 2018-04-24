@@ -6,9 +6,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 //@Entity
 //@Table(name = "cart")
@@ -36,18 +34,19 @@ public class Cart implements Serializable {
 
     HashMap<ProductVariation, Integer> lineItems;
 
-    public Cart(){
-//        items = new ArrayList<>();
+    Calendar created;
 
+
+    public Cart(){
         quantity = 0;
         sales_tax = 0;
         subtotal = 0;
         total = 0;
         lineItems = new HashMap<>();
+        created = Calendar.getInstance();
     }
 
     public Cart(int quantity, long total, long sales_tax, long subtotal){
-//        this.items = items;
         this.quantity = quantity;
         this.total = total;
         this.sales_tax = sales_tax;
@@ -57,12 +56,6 @@ public class Cart implements Serializable {
     public Cart(String id){
         this.id = id;
     }
-
-
-    //    public Cart(CartItem item){
-//        items = new ArrayList<>();
-//        items.add(item);
-//    }
 
     public String getId() {
         return id;
