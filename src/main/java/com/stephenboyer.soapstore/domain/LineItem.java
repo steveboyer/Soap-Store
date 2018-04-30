@@ -2,14 +2,36 @@ package com.stephenboyer.soapstore.domain;
 
 import com.stephenboyer.soapstore.util.Strings;
 
+import javax.sound.sampled.Line;
+
 public class LineItem {
 
-    private String productId;
-    private Integer quantity;
-    private String scent;
-    private String size;
+    // Name of overall product including variations
+    private String productName;
 
-    public LineItem() {
+    // Id of product including all variations
+    private String productId;
+
+    // sku of specific variation
+    private String productSku;
+
+
+    private Integer quantity;
+
+    public LineItem(){
+
+    }
+
+    public LineItem(String productSku, Integer quantity){
+        this.productSku = productSku;
+        this.quantity = quantity;
+    }
+
+    public LineItem(String productId, String sku, String productName, Integer quantity) {
+        this.productId = productId;
+        this.productSku = sku;
+        this.productName = productName;
+        this.quantity = quantity;
     }
 
     public String getProductId() {
@@ -20,6 +42,22 @@ public class LineItem {
         this.productId = productId;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductSku() {
+        return productSku;
+    }
+
+    public void setProductSku(String productSku) {
+        this.productSku = productSku;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -28,25 +66,20 @@ public class LineItem {
         this.quantity = quantity;
     }
 
-    public String getScent() {
-        return scent;
-    }
-
-    public void setScent(String scent) {
-        this.scent = scent;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     @Override
     public String toString() {
         return Strings.toString(this);
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof LineItem)){
+            return false;
+        }
+
+        LineItem item = (LineItem) o;
+
+        return item.productSku.equals(getProductSku());
+
+    }
 }

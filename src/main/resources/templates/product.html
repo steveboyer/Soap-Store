@@ -30,8 +30,7 @@
                 <div class="col-md-6">
                     <img src="" th:src="${product.imageUrl}" class="rounded img-fluid img-thumbnail mb-4">
                     <input type="hidden" id="product-id" th:value="${product.productId}"/>
-                    <p class="text-white" th:text="${product.description}"></p>
-                    <p class="text-white" >$4.99</p>
+
                 </div>
                 <div class="col-md-6" >
                     <form action="/cart/added_to_cart" method="get">
@@ -44,28 +43,45 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                        <!-- Check if variation is by size in ounces -->
-                        <div th:if="${product.getVariationOz()}">
-                            <div class="form-group center-text">
-                                <label for="sel-size">Select Size:</label>
-                                <select name="size" class="form-control" id="sel-size">
-                                    <div th:each="size : ${product.getVariationOzVals()}" class="col-lg-4 col-md-6 mb-4">
-                                        <option th:value="${size}" th:text="${size}"></option>
-                                    </div>
-                                </select>
-                            </div>
+
+                        <div th:if="${product.hasVariations()}" id="variation-selector" class="form-group center-text">
+                            <label for="sel-size">Select Size:</label>
+                            <select name="size" class="form-control" id="sel-size" >
+                                <option th:each="variation : ${product.getProductVariations()}" th:value="${variation.getVariationData()}" th:text="${variation.getVariationValue()}"></option>
+                            </select>
                         </div>
-                        <!-- Check if variation is by large and small sizes -->
-                        <div th:if="${product.getVariationLgSm()}">
-                            <div class="form-group center-text">
-                                <label for="sel-size">Select Size:</label>
-                                <select name="size" class="form-control" id="sel-size">
-                                    <div th:each="size : ${product.getVariationLgSmVals()}" class="col-lg-4 col-md-6 mb-4">
-                                        <option th:value="${size}" th:text="${size}"></option>
-                                    </div>
-                                </select>
-                            </div>
+
+                        <div th:unless="${product.hasVariations()}" >
+                            <input type="hidden" id="single-variation-data" th:value="${product.getFirstVariation().getVariationData()}"/>
                         </div>
+
+                        <p class="text-white" th:text="${product.description}"></p>
+                        <p class="text-white" id="price">$0.00</p>
+
+
+
+                        <!--&lt;!&ndash; Check if variation is by size in ounces &ndash;&gt;-->
+                        <!--<div th:if="${product.getVariationOz()}">-->
+                            <!--<div class="form-group center-text">-->
+                                <!--<label for="sel-size">Select Size:</label>-->
+                                <!--<select name="size" class="form-control" id="sel-size">-->
+                                    <!--<div th:each="size : ${product.getVariationOzVals()}" class="col-lg-4 col-md-6 mb-4">-->
+                                        <!--<option th:value="${size}" th:text="${size}"></option>-->
+                                    <!--</div>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Check if variation is by large and small sizes &ndash;&gt;-->
+                        <!--<div th:if="${product.getVariationLgSm()}">-->
+                            <!--<div class="form-group center-text">-->
+                                <!--<label for="sel-size">Select Size:</label>-->
+                                <!--<select name="size" class="form-control" id="sel-size">-->
+                                    <!--<div th:each="size : ${product.getVariationLgSmVals()}" class="col-lg-4 col-md-6 mb-4">-->
+                                        <!--<option th:value="${size}" th:text="${size}"></option>-->
+                                    <!--</div>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <a href="#" class="category-list-item" id="add-button">Add to cart</a>
                     </form>
                 </div>

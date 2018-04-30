@@ -5,6 +5,8 @@ import com.stephenboyer.soapstore.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.Null;
+
 public class ProductVariation  {
 //    @Id
     private String id;
@@ -17,21 +19,74 @@ public class ProductVariation  {
 
     // Variation name
     private String name;
-    private long price;
+    private Long price;
+    private String sPrice;
+    private String variationValue;
+    private String variationData;
 
-    private final Logger logger = LoggerFactory.getLogger(ProductVariation.class.getSimpleName());
 
-    public ProductVariation(CatalogItemVariation variation){
+    private Boolean available;
+
+    private final transient Logger logger = LoggerFactory.getLogger(ProductVariation.class.getSimpleName());
+
+    public ProductVariation(CatalogItemVariation variation, int totalVariations){
         sku = variation.getSku();
         variationId = variation.getItemId();
         name = variation.getName();
         // @TODO fix NPE below
         try {
             price = variation.getPriceMoney().getAmount();
+
+            // Convert Long value to String, e.g. 700 => $7.00
+            sPrice = Strings.getPriceString(price);
+
+            // Cut off third part of sku as variation
+            if(sku != null ) {
+                String[] variationValues = sku.split("_");
+                if(variationValues.length >= 1) {
+                    variationValue = variationValues[variationValues.length - 1];
+
+                }
+            }
+
+            // Goes into html data parameter
+            variationData = sku + "/" + sPrice;
+
         } catch (NullPointerException ex){
             logger.error("Product " + sku + ", " + variationId + " had no price data");
         }
     }
+
+    public ProductVariation(){
+
+    }
+
+
+    public String getVariationData() {
+        return variationData;
+    }
+
+    public void setVariationData(String variationData) {
+        this.variationData = variationData;
+    }
+
+    public String getsPrice() {
+        return sPrice;
+    }
+
+    public void setsPrice(String sPrice) {
+        this.sPrice = sPrice;
+    }
+
+    public String getVariationValue() {
+        return variationValue;
+    }
+
+    public void setVariationValue(String variationValue) {
+        this.variationValue = variationValue;
+    }
+
+
 
     public String getId() {
         return id;
@@ -39,11 +94,6 @@ public class ProductVariation  {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return Strings.toString(this);
     }
 
     public String getVariationId() {
@@ -76,5 +126,10 @@ public class ProductVariation  {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return Strings.toString(this);
     }
 }

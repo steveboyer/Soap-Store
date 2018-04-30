@@ -36,6 +36,8 @@ public class Product {
     private List<String> variationOzVals = new ArrayList<>();
     private Boolean variationLgSm = false;
     private List<String> variationLgSmVals = new ArrayList<>();
+    private Integer totalVariations;
+    private Boolean hasVariations;
 
     private String url;
 //    private static AtomicLong idCounter = new AtomicLong(1001);
@@ -75,7 +77,11 @@ public class Product {
         // Product's URL, '/store/item/93HM93JE...'
         //ex. laramiesoapco.com/store/item/93HM93JE...
         url =  ("/store/item/") + productId;
+        totalVariations = variations.size();
 
+        if(totalVariations > 1){
+            hasVariations = true;
+        }
 
         try {
             variations.forEach(this::setVariation);
@@ -83,6 +89,26 @@ public class Product {
             ex.printStackTrace(); // TODO
         }
 
+    }
+
+    public Integer getTotalVariations() {
+        return totalVariations;
+    }
+
+    public void setTotalVariations(Integer totalVariations) {
+        this.totalVariations = totalVariations;
+    }
+
+    public Boolean hasVariations() {
+        return hasVariations;
+    }
+
+    public void hasVariations(Boolean hasVariations) {
+        this.hasVariations = hasVariations;
+    }
+
+    public ProductVariation getFirstVariation(){
+        return productVariations.get(0);
     }
 
     public List<String> getVariationOzVals() {
@@ -110,7 +136,7 @@ public class Product {
     }
 
     private void setVariation(CatalogObject variation) {
-        productVariations.add(new ProductVariation(variation.getItemVariationData()));
+        productVariations.add(new ProductVariation(variation.getItemVariationData(), totalVariations));
 
         String sku = variation.getItemVariationData().getSku();
 

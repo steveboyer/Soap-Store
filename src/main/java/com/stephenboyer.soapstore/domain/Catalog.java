@@ -1,9 +1,11 @@
 package com.stephenboyer.soapstore.domain;
 
+import com.stephenboyer.soapstore.util.ProductComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class Catalog {
                     }
                 }
             }
+
+            products.sort(new ProductComparator());
 
             mappedProducts.put(category.getId(), productsInCategory);
         }
@@ -74,26 +78,10 @@ public class Catalog {
     public List<Product> getProductsInCategory(String categoryId){
         logger.info("categoryId: " + categoryId);
 
-//        List<Product> products = new ArrayList<>();
-//
-//        List<Product> allProducts = getProducts();
-//
-//
-//        for(Product product : allProducts){
-//            if(product.getCategory() != null) {
-//                logger.info("Product category: " + product.getCategory().getName().toLowerCase().replace(" ", "-"));
-//            } else {
-//                logger.info("Product: " + product.getName() + " had no category");
-//            }
-//            if(product.getCategory() != null && product.getCategory().getName().toLowerCase().replace(" ", "-").equals(categoryId)){
-//                products.add(product);
-//            }
-//        }
-
         return mappedProducts.get(categoryId);
     }
 
-    public Product getProduct(String id){
+    public Product getProductById(String id){
         for(Product product : products){
             if(product.getId().equals(id)){
                 return product;
@@ -102,16 +90,19 @@ public class Catalog {
         return null;
     }
 
+    public ProductVariation getProductVariationBySku(String productId, String sku){
+        List<ProductVariation> products = getProductById(productId).getProductVariations();
 
-//    public ProductVariation findProductVariationBySku(String sku){
-//        for(Product product : products){
-//            for(ProductVariation productVariation : product.getProductVariations()){
-//                if(productVariation.getSku().equalsIgnoreCase(sku)){
-//                    return productVariation;
-//                }
-//            }
-//        }
-//    }
+        for(ProductVariation variation : products){
+            if(variation.getSku().equals(sku)){
+                return variation;
+            }
+        }
+
+        return null;
+    }
+
+
 
 //    class
     // Use comparator? No, use HashMap<>(). This will use more ram, but will be faster. HashMap should probably be used.

@@ -1,20 +1,25 @@
 $(function(){
     console.log("Page loaded");
+
+    updatePrice();
+
+    $("#variation-selector").change(function(){
+        updatePrice();
+    });
+
     $("#cart-button-header").collapse("hide");
 
     $("#add-button").click(function() {
         console.log("clicked");
         var quantity = $("select#sel-quantity").val();
-        var scent = $("select#sel-scent").val();
         var size = $("select#sel-size").val();
-        console.log(quantity + " " + scent + " " + size);
         var productId = $("#product-id").val();
         var data = {
-            "productId": productId,
             "quantity": quantity,
-            "scent": scent,
-            "size": size
+            "productSku": getProductId()
         };
+
+        console.log(data);
 
         $.ajax({
             type: "POST",
@@ -33,3 +38,24 @@ $(function(){
     });
 });
 
+function getProductId(){
+    if($("#variation-selector").length ){
+        return $("#sel-size").val().split("/")[0];
+    } else {
+        return $("#single-variation-data").val().split("/")[0];
+    }
+}
+
+function getPrice(){
+    if($("#variation-selector").length ) {
+        return $("#sel-size").val().split("/")[1];
+    } else {
+        return $("#single-variation-data").val().split("/")[1];
+    }
+
+
+}
+
+function updatePrice(){
+    $("#price").text(getPrice());
+}

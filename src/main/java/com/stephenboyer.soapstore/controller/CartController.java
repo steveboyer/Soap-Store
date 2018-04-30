@@ -44,15 +44,7 @@ public class CartController {
         return "redirect:/";
     }
 
-    public void addItem(ProductVariation product, int quantity){
-        HashMap<ProductVariation, Integer> products = cart.getLineItems();
 
-        Integer currentQuantity = products.getOrDefault(product, 0);
-
-        products.put(product, quantity + currentQuantity);
-
-        logger.info(cart.toString());
-    }
 
     @RequestMapping(value = "/cart/added_to_cart", method = GET)
     public ModelAndView added_to_cart(@RequestParam String prodId, @RequestParam long quantity){

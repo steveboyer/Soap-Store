@@ -36,10 +36,12 @@ public class CartControllerRest {
 
         log.info(lineItem.toString());
 
-//        cart.addItem();
+        cart.addItem(lineItem.getProductSku(), lineItem.getQuantity());
 
         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
     }
+
+
 
     @Autowired
     public void setCart(Cart cart){
