@@ -14,7 +14,8 @@
 <div class="container big-card" th:fragment="cart">
     <h3 class="text-center text-white mb-4">Cart</h3>
     <div class="row text-center text-white mb-4">
-        <table class="table table-striped">
+        <h3 class="center-text" th:if="${cart.isEmpty()}">Nothing in Cart</h3>
+        <table class="table table-striped" th:unless="${cart.isEmpty()}">
             <thead>
                 <tr>
                     <th>Product Name</th>
@@ -25,10 +26,10 @@
             </thead>
             <tbody th:each="lineitem : ${cart.lineItems}">
                 <tr>
-                    <td th:text="${lineitem.productId}">Product Name</td>
-                    <td>Price</td>
-                    <td th:text="${lineitem.quantity}">Quantity</td>
-                    <td>Total for line</td>
+                    <td th:text="${lineitem.getProductSku()}">Product Name</td>
+                    <td th:text="${lineitem.getQuantity()}">Quantity</td>
+                    <td th:text="${lineitem.getPrice()}"></td>
+                    <td th:text="${lineitem.getTotal()}"></td>
                 </tr>
 
                 <!--<tr>-->

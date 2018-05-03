@@ -9,6 +9,8 @@ $(function(){
 
     $("#cart-button-header").collapse("hide");
 
+    $("#go-to-cart").hide();
+
     $("#add-button").click(function() {
         console.log("clicked");
         var quantity = $("select#sel-quantity").val();
@@ -33,6 +35,7 @@ $(function(){
         }).done(function(response){
             console.log('response: ');
             console.log(response);
+            $("#go-to-cart").show();
         });
 
     });

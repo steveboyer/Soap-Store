@@ -24,6 +24,7 @@ public class Cart {
 
     private Long subtotal;
 
+    private Boolean isEmpty = true;
 
     private Calendar created;
 
@@ -53,8 +54,17 @@ public class Cart {
                 }
             }
         }
+
+        isEmpty = false;
     }
 
+    public Boolean isEmpty() {
+        return isEmpty;
+    }
+
+    public void setEmpty(Boolean empty) {
+        isEmpty = empty;
+    }
 
     public void setCreated(Calendar created) {
         this.created = created;
