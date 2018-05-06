@@ -39,6 +39,8 @@ public class Product {
     private Integer totalVariations;
     private Boolean hasVariations;
 
+    private String v1ItemId;
+
     private String url;
 //    private static AtomicLong idCounter = new AtomicLong(1001);
 
@@ -89,6 +91,15 @@ public class Product {
             ex.printStackTrace(); // TODO
         }
 
+    }
+
+
+    public void setV1ItemId(String v1ItemId){
+        this.v1ItemId = v1ItemId;
+    }
+
+    public String getV1ItemId(){
+        return v1ItemId;
     }
 
     public Integer getTotalVariations() {

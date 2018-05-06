@@ -22,7 +22,7 @@ public class CatalogFactory {
 
             SquareConnector sq = new SquareConnector();
 
-            catalog = new Catalog(sq.getProducts(), sq.getCategories());
+            catalog = new Catalog(sq.getProducts(), sq.getCategories(), sq.getInventoryEntries());
 
             return catalog;
         }

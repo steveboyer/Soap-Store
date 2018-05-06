@@ -23,7 +23,7 @@ public class ProductVariation  {
     private String sPrice;
     private String variationValue;
     private String variationData;
-
+    private String v1VariationId;
 
     private Boolean available;
 
@@ -61,6 +61,13 @@ public class ProductVariation  {
 
     }
 
+    public String getV1VariationId() {
+        return v1VariationId;
+    }
+
+    public void setV1VariationId(String v1VariationId) {
+        this.v1VariationId = v1VariationId;
+    }
 
     public String getVariationData() {
         return variationData;

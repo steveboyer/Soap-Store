@@ -34,6 +34,8 @@ import com.stephenboyer.soapstore.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.Null;
+import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -93,6 +95,7 @@ public class SquareConnector {
 
             getSquareLocation();
 
+
             String locationId = squareLocation.getId();
 
             List<V1Category> result = v1ItemsApi.listCategories(locationId);
@@ -106,6 +109,37 @@ public class SquareConnector {
             return null;
         }
     }
+
+    public List<V1InventoryEntry> getInventoryEntries(){
+        try {
+            V1ItemsApi v1ItemsApi = new V1ItemsApi();
+
+            getSquareLocation();
+
+
+            for (V1Item item : v1ItemsApi.listItems(squareLocation.getId(), null)){
+                item.getVariations().forEach(s -> logger.info(s.getId() + " " + s.getItemId() +  " " + s.getName() + " " + s.getSku()));
+
+            }
+
+            List<V1InventoryEntry> inventoryEntries = v1ItemsApi.listInventory(squareLocation.getId(), null, null);
+
+            inventoryEntries.forEach(s -> logger.info(s.getVariationId() + " " + s.getQuantityOnHand()));
+
+            return inventoryEntries;
+
+            // 1027A6F8-7BE2-4151-BB13-04E8B115069C 14
+
+            // 05B0811C-A549-4C64-BEEA-3FB08CD36B33 Trapper trapper_ahjbeardoil
+            // 4ENZW5UFVN2XBT6SNBIBQHIX Sandalwood & Cedar sandalwood&cedar_ahjbeardoil
+            // JXFKBYOVBKBVEDISQ4ANPXRY Seafarer searfarer_ahjbeardoil
+            // K3GOK7B6YYRX4TB2755YVOIZ Woodsman woodsman_ahjbeardoil
+        } catch (ApiException |NullPointerException ex){
+            logger.error("Could not get inventory! " + ex.getMessage());
+            return null;
+        }
+    }
+
 
     public void checkout(){
 

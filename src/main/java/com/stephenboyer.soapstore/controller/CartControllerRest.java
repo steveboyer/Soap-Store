@@ -38,6 +38,8 @@ public class CartControllerRest {
 
         cart.addItem(lineItem.getProductSku(), lineItem.getQuantity());
 
+        log.info("cart: " + cart.toString());
+
         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
     }
 

@@ -1,9 +1,13 @@
 package com.stephenboyer.soapstore.domain;
 
+import com.squareup.connect.models.V1InventoryEntry;
 import com.stephenboyer.soapstore.util.ProductComparator;
+import com.stephenboyer.soapstore.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,12 +16,16 @@ import java.util.List;
 public class Catalog {
     private List<Product> products;
     private List<Category> categories;
+    private List<V1InventoryEntry> inventory;
     private HashMap<String, ArrayList<Product>> mappedProducts;
+
+
     private static final Logger logger = LoggerFactory.getLogger(Catalog.class.getSimpleName());
 
-    public Catalog(List<Product> products, List<Category> categories){
+    public Catalog(List<Product> products, List<Category> categories, List<V1InventoryEntry> inventory){
         this.products = products;
         this.categories = categories;
+        this.inventory = inventory;
         mapProducts();
     }
 
@@ -34,11 +42,18 @@ public class Catalog {
                     if (product.getCategoryId().equals(category.getCategoryId())) {
                         product.setCategory(category);
                         productsInCategory.add(product);
+                        for(ProductVariation productVariation : product.getProductVariations()){
+                            logger.info(Strings.toString(product));
+                        }
+
                     }
                 }
             }
 
             products.sort(new ProductComparator());
+
+
+
 
             mappedProducts.put(category.getId(), productsInCategory);
         }
@@ -47,6 +62,8 @@ public class Catalog {
     public List<Product> getProducts() {
         return products;
     }
+
+
 
     public void setProducts(List<Product> products) {
         this.products = products;
