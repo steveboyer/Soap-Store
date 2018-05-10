@@ -157,6 +157,10 @@ ul {
   color: black;
 }
 
+.dropdown-menu {
+  background-color: #535353;
+}
+
 .navbar-brand {
   font-family: 'Kaushan Script', Arial, sans-serif;
   font-weight: normal;

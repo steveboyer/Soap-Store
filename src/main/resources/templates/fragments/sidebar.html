@@ -18,12 +18,14 @@
 <body>
 <div th:fragment="sidebar">
     <div class="col-lg-3 col-md-6" >
-        <h1 class="my-4 img-fluid"><img
-                id="logo"
-                src="../../public/images/LSC_logo.svg"
-                th:src="@{/images/LSC_logo.svg}"
-                alt="Laramie Soap Co."/>
-        </h1>
+        <a href="/">
+            <h1 class="my-4 img-fluid"><img
+                    id="logo"
+                    src="../../public/images/LSC_logo.svg"
+                    th:src="@{/images/LSC_logo.svg}"
+                    alt="Laramie Soap Co."/>
+            </h1>
+        </a>
         <div class="container">
             <ul id="categories">
                 <div th:each="category : ${catalog.categories}">

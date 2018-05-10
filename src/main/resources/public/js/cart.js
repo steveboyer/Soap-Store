@@ -9,6 +9,27 @@ $(function(){
 
     $("#cart-button-header").collapse("hide");
 
+    var active = function(){
+      switch ($("#view-name").val()){
+          case "home":
+              $("#nav-home").addClass("active");
+              break;
+          case "cart":
+              $("#nav-cart").addClass("active");
+              break;
+          case "about":
+              $("#nav-about").addClass("active");
+              break;
+          case "categories":
+              $("#dropdownMenuLink").addClass("active");
+              break;
+          case "contact":
+              $("#nav-contact").addClass("active");
+              break;
+      }
+
+    };
+
     $("#go-to-cart").hide();
 
     $("#add-button").click(function() {

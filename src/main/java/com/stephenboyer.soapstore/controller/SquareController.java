@@ -43,8 +43,6 @@ public class SquareController {
 
         model.put("transactionId", responseId);
 
-        String view = "cart";
-        model.put("view", view );
-        return view;
+        return "charge";
     }
 }

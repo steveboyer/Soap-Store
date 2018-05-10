@@ -25,8 +25,6 @@ public class CheckoutController {
         ModelAndView mav = new ModelAndView("checkout");
         mav.addObject("catalog", CatalogFactory.getCatalog());
         //mav.addObject("")
-        String view = "cart";
-        mav.addObject("view", view );
 
         return mav;
     }

@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Headers here so this page can be viewed as full html file -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Laramie Soap Co.</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <link href="../../public/stylesheets/styles.css" th:href="@{/stylesheets/styles.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
-$END$
 </body>
+<!-- End Headers -->
+
+<!-- Begin Footer Fragment -->
+<div th:fragment="card">
+    <div class="card h-100">
+        <a href="#"><img class="card-img-top" th:src="${product.imageUrl}" alt=""></a>
+        <div class="card-body">
+            <h4 class="card-title">
+                <a th:href="${product.url}" th:text="${product.name}">Product Name</a>
+            </h4>
+            <h5 th:text="${product.sPriceRange}"></h5>
+            <p class="card-text">Product Description</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+        </div>
+    </div>
+</div>
 </html>

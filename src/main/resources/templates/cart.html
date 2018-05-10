@@ -13,8 +13,10 @@
 <!-- Page Content -->
 <div class="container big-card" th:fragment="cart">
     <h3 class="text-center text-white mb-4">Cart</h3>
+    <input type="hidden" value="cart" id="view-name"/>
+    <h3 th:if="${cart.isEmpty()}" class="text-center text-white">Nothing in Cart</h3>
     <div class="row text-center text-white mb-4">
-        <h3 class="center-text" th:if="${cart.isEmpty()}">Nothing in Cart</h3>
+
         <table class="table table-striped" th:unless="${cart.isEmpty()}">
             <thead>
                 <tr>

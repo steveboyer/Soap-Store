@@ -39,6 +39,9 @@ public class Product {
     private Integer totalVariations;
     private Boolean hasVariations;
 
+    private String sPriceRange = "";
+    private Long[] prices;
+
     private String v1ItemId;
 
     private String url;
@@ -65,7 +68,7 @@ public class Product {
         // Use image coming soon placeholder if image isn't present
         // @TODO improve
         if(catalogItem.getImageUrl() == null || catalogItem.getImageUrl().isEmpty()){
-            imageUrl = "/images/Image_coming_soon_2.png";
+            imageUrl = "/images/Image_coming_soon.png";
             imageComingSoon = true;
         } else {
             imageUrl = catalogItem.getImageUrl();
@@ -90,6 +93,9 @@ public class Product {
         } catch (NullPointerException ex){
             ex.printStackTrace(); // TODO
         }
+
+
+
 
     }
 

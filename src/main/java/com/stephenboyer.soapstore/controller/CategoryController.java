@@ -36,8 +36,6 @@ public class CategoryController {
 
 //        mav.addObject("categories", categories);
 
-        String view = "home";
-        mav.addObject("view", view );
 
         return mav;
     }

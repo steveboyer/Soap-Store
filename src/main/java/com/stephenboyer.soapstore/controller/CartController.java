@@ -30,9 +30,7 @@ public class CartController {
     public ModelAndView cart(){
         ModelAndView mav = new ModelAndView("cart");
 
-        String view = "cart";
         logger.info("Hit /cart");
-        mav.addObject("view", view );
         mav.addObject("catalog", CatalogFactory.getCatalog());
         mav.addObject("cart", cart);
         logger.info("Cart: " + cart);

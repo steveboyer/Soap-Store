@@ -54,8 +54,6 @@ public class IndexController {
 
 
 
-        String view = "home";
-        mav.addObject("view", view );
 
         return mav;
     }
