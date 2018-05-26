@@ -37,9 +37,9 @@ public class Product {
     private Boolean variationLgSm = false;
     private List<String> variationLgSmVals = new ArrayList<>();
     private Integer totalVariations;
-    private Boolean hasVariations;
+    private Boolean hasVariations = false;
 
-    private String sPriceRange = "";
+    private String priceRange = "";
     private Long[] prices;
 
     private String v1ItemId;
@@ -48,6 +48,14 @@ public class Product {
 //    private static AtomicLong idCounter = new AtomicLong(1001);
 
     private Product(){ }
+
+    public String getPriceRange() {
+        return priceRange;
+    }
+
+    public void setsPriceRange(String sPriceRange) {
+        this.priceRange = sPriceRange;
+    }
 
     public Product(CatalogObject catalogObject){
         // Entire product, including variations = CatalogObject
@@ -90,6 +98,33 @@ public class Product {
 
         try {
             variations.forEach(this::setVariation);
+
+            ArrayList<Long> prices = new ArrayList<>();
+
+
+            Long priceMin = Long.MAX_VALUE;
+            Long priceMax = 0L;
+
+            for(ProductVariation v : getProductVariations()){
+                priceMin = v.getPrice() < priceMin ? v.getPrice() : priceMin;
+                priceMax = v.getPrice() > priceMax ? v.getPrice() : priceMax;
+            }
+
+        if(hasVariations) {
+            if(!priceMax.equals(priceMin)) {
+                priceRange = Strings.getPriceString(priceMin) +
+                        "-" +
+                        Strings.getPriceString(priceMax);
+            } else {
+                priceRange = Strings.getPriceString(priceMax);
+            }
+        } else if(getProductVariations().size() == 1) {
+            priceRange = getProductVariations().get(0).getsPrice();
+        } else {
+            priceRange = "ERROR";
+            logger.warn("No price data");
+        }
+
         } catch (NullPointerException ex){
             ex.printStackTrace(); // TODO
         }
@@ -98,6 +133,7 @@ public class Product {
 
 
     }
+
 
 
     public void setV1ItemId(String v1ItemId){

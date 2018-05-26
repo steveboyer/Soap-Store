@@ -19,18 +19,18 @@
 
 <!-- Begin Footer Fragment -->
 <div th:fragment="card">
-    <div class="card h-100">
-        <a href="#"><img class="card-img-top" th:src="${product.imageUrl}" alt=""></a>
-        <div class="card-body">
-            <h4 class="card-title">
-                <a th:href="${product.url}" th:text="${product.name}">Product Name</a>
-            </h4>
-            <h5 th:text="${product.sPriceRange}"></h5>
-            <p class="card-text">Product Description</p>
+    <a th:href="${product.url}" style="text-decoration: none">
+        <div class="card h-100">
+            <img src="" class="card-img-top" th:src="${product.imageUrl}" alt=""/>
+            <div class="card-body" th:href="${product.url}">
+                <h4 class="card-title" th:text="${product.name}"></h4>
+                <h5 th:text="${product.priceRange}"></h5>
+                <p class="card-text text-white" th:text="${product.description}"></p>
+            </div>
+            <!--<div class="card-footer">-->
+            <!--<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>-->
+            <!--</div>-->
         </div>
-        <div class="card-footer">
-            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-        </div>
-    </div>
+    </a>
 </div>
 </html>

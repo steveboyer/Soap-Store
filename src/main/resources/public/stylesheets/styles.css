@@ -364,4 +364,9 @@ ul {
     padding: 30px 40px 30px 40px;
   }
 }
+.center {
+  width: 150px;
+  margin: 40px auto;
+}
+
 /* Customize the Apple Pay on the Web button */

@@ -127,13 +127,6 @@ public class SquareConnector {
             inventoryEntries.forEach(s -> logger.info(s.getVariationId() + " " + s.getQuantityOnHand()));
 
             return inventoryEntries;
-
-            // 1027A6F8-7BE2-4151-BB13-04E8B115069C 14
-
-            // 05B0811C-A549-4C64-BEEA-3FB08CD36B33 Trapper trapper_ahjbeardoil
-            // 4ENZW5UFVN2XBT6SNBIBQHIX Sandalwood & Cedar sandalwood&cedar_ahjbeardoil
-            // JXFKBYOVBKBVEDISQ4ANPXRY Seafarer searfarer_ahjbeardoil
-            // K3GOK7B6YYRX4TB2755YVOIZ Woodsman woodsman_ahjbeardoil
         } catch (ApiException |NullPointerException ex){
             logger.error("Could not get inventory! " + ex.getMessage());
             return null;
@@ -278,7 +271,7 @@ public class SquareConnector {
         return products;
     }
 
-    public static String loadEnvironmentVariable(String name) {
+    private static String loadEnvironmentVariable(String name) {
         String value = System.getenv(name);
         if (value == null || value.length() == 0) {
             throw new IllegalStateException(
@@ -288,18 +281,17 @@ public class SquareConnector {
         return value;
     }
 
-    public Location lookupCardProcessingLocation() throws ApiException {
+    private Location lookupCardProcessingLocation() throws ApiException {
         LocationsApi locationsApi = new LocationsApi();
         locationsApi.setApiClient(getSquareClient());
 
         try {
-            Location location = locationsApi.listLocations().getLocations().stream()
+            // return locations with processing capabilities
+            return locationsApi.listLocations().getLocations().stream()
                     .filter(l -> l.getCapabilities().contains(Location.CapabilitiesEnum.PROCESSING))
                     .findFirst()
                     .orElseThrow(() -> new IllegalStateException(
                             "At least one location must support card processing"));
-            //System.out.println(location.getAddress());
-            return location;
         } catch (NullPointerException ex){
             // Location does not have ability to process payments
             System.err.println("Could not get a valid location.");

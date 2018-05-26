@@ -44,7 +44,11 @@ public class ProductVariation  {
             if(sku != null ) {
                 String[] variationValues = sku.split("_");
                 if(variationValues.length >= 1) {
-                    variationValue = variationValues[variationValues.length - 1];
+                    variationValue =
+                            variationValues[variationValues.length - 1].substring(0,1).toUpperCase() +
+                                    variationValues[variationValues.length - 1]
+                                            .substring(1, (variationValues[variationValues.length -1].length()));
+
 
                 }
             }

@@ -29,31 +29,28 @@
             <tbody th:each="lineitem : ${cart.lineItems}">
                 <tr>
                     <td th:text="${lineitem.getProductSku()}">Product Name</td>
-                    <td th:text="${lineitem.getQuantity()}">Quantity</td>
+                    <td th:text="${lineitem.getQuantity()}">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                            <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" name="quant" class="form-control input-number" th:value="${lineitem.getQuantity()}"  min="0" max="10">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                            <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
                     <td th:text="${lineitem.getPrice()}"></td>
                     <td th:text="${lineitem.getTotal()}"></td>
                 </tr>
-
-                <!--<tr>-->
-                    <!--<td>Soap lorem ipsum lorre</td>-->
-                    <!--<td>5</td>-->
-                    <!--<td>$5.55</td>-->
-                    <!--<td>$10.55</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>Soap</td>-->
-                    <!--<td>5</td>-->
-                    <!--<td>$5.55</td>-->
-                    <!--<td>$10.55</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>Soap</td>-->
-                    <!--<td>5</td>-->
-                    <!--<td>$5.55</td>-->
-                    <!--<td>$10.55</td>-->
-                <!--</tr>-->
             </tbody>
         </table>
+
+
     </div>
 </div>
 <!-- /.container -->

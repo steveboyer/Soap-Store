@@ -36,15 +36,13 @@ public class ProductController {
 
         // Get product as defined in URL
 
-
         // Get list of products and set variables for Thymeleaf
         mav.addObject("product", product);
         log.info(product.toString());
         List<ProductVariation> variations = product.getProductVariations();
 
-        // List
+        // List of related products, e.g. different scents or shapes
         mav.addObject("related", 0);
-
 
         return mav;
     }

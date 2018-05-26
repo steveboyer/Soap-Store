@@ -57,34 +57,35 @@
             <!-- Row -->
             <div class="row">
                 <div th:each="product,iterStat : ${catalog.products}" th:if="${iterStat.index}<9" class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a th:href="${product.url}"><img src="" class="card-img-top" th:src="${product.imageUrl}" alt=""/></a>
-                        <div class="card-body" th:href="${product.url}">
-                            <h4 class="card-title">
-                                <a th:href="${product.url}" th:text="${product.name}" style="font-weight: bold"></a>
-                            </h4>
-                            <!--<h5>$24.99</h5>-->
-                            <p class="card-text text-white" th:text="${product.getDescription()}"></p>
-                        </div>
-                        <!--<div class="card-footer">-->
-                            <!--<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>-->
+                    <!--/*/ <th:block th:include="fragments/card :: card"></th:block> /*/-->
+
+                    <!--<a th:href="${product.url}" style="text-decoration: none">-->
+                        <!--<div class="card h-100">-->
+                            <!--<img src="" class="card-img-top" th:src="${product.imageUrl}" alt=""/>-->
+                            <!--<div class="card-body" th:href="${product.url}">-->
+                                <!--<h4 class="card-title" th:text="${product.name}"></h4>-->
+                                <!--<h5 th:text="${product.priceRange}"></h5>-->
+                                <!--<p class="card-text text-white" th:text="${product.getDescription()}"></p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<div class="card-footer">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
                         <!--</div>-->
-                    </div>
+                    <!--</a>-->
                 </div>
+                <!-- /.row -->
+
             </div>
-            <!-- /.row -->
+            <!-- /.col-lg-9 -->
 
         </div>
-        <!-- /.col-lg-9 -->
+        <!-- /.row -->
 
     </div>
-    <!-- /.row -->
+    <!-- /.container -->
 
-</div>
-<!-- /.container -->
-
-<!-- Footer -->
-<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+    <!-- Footer Fragment -->
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 
 </body>
 

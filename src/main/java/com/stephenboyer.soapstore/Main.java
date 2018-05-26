@@ -20,6 +20,7 @@ package com.stephenboyer.soapstore;
 //import com.zaxxer.hikari.HikariDataSource;
 import com.stephenboyer.soapstore.domain.Catalog;
 import com.stephenboyer.soapstore.domain.Product;
+import com.stephenboyer.soapstore.util.StatusTimer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -57,23 +58,5 @@ public class Main {
 
         Thread t = new StatusTimer();
         t.start();
-
-
     }
-
-    class StatusTimer extends Thread {
-        @Override
-        public void run(){
-            while (true) {
-                logger.info("Time: " + Calendar.getInstance().getTime());
-                try {
-                    Thread.sleep(100000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-
 }

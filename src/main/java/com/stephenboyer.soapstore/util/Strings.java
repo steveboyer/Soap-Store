@@ -20,26 +20,18 @@ public class Strings {
 
     public static String getPriceString(Long price){
         String sPrice = Long.toString(price);
-
-        // No price data
-        if(sPrice.isEmpty()){
-            return "$0.00";
-        }
-
-        // Price < $0.10
-        if(sPrice.length() == 1){
-            return "$0.0" + sPrice;
-        }
-
-        // $0.10 < Price < $1.00
-        if(sPrice.length() == 2){
-            return "$0." + sPrice;
-        }
-
-        // Price > $1.00 or no data
         try {
-            return "$" + sPrice.substring(0, sPrice.length() - 2) + "." + sPrice.substring(sPrice.length() - 2);
-        } catch (NullPointerException ex){
+            switch (sPrice.length()) {
+                case 0:
+                    return "$0.00";
+                case 1:
+                    return "$0.0" + sPrice;
+                case 2:
+                    return "$0." + sPrice;
+                default:
+                    return "$" + sPrice.substring(0, sPrice.length() - 2) + "." + sPrice.substring(sPrice.length() - 2);
+            }
+        } catch (NullPointerException ex) {
             return "$0.00";
         }
     }

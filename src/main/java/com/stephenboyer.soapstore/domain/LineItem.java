@@ -17,8 +17,8 @@ public class LineItem {
 
 
     private Integer quantity;
-
-
+    private Long total;
+    private Long price;
 
     public LineItem(){
 
@@ -34,6 +34,28 @@ public class LineItem {
         this.productSku = sku;
         this.productName = productName;
         this.quantity = quantity;
+
+        // Find productvariation
+        //
+
+
+
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public String getProductId() {
